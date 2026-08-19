@@ -147,7 +147,10 @@ export default function Footer() {
           </span>
         </div>
 
-        {missing.length > 0 && (
+        {/* Developer aid only. A public "setup incomplete" banner would undermine the very
+            review this site exists to pass; the unfilled values still show as visible
+            pending markers on the pages that carry them. */}
+        {import.meta.env.DEV && missing.length > 0 && (
           <p className="footer__setupNotice">
             <strong>Setup incomplete.</strong> {missing.length} business detail
             {missing.length === 1 ? '' : 's'} still unset in <code>src/config/business.ts</code>:{' '}

@@ -40,15 +40,19 @@ export interface BusinessInfo {
 }
 
 export const business: BusinessInfo = {
-  legalName: '',
-  entityType: '',
+  legalName: 'BiteSite',
+  entityType: 'Sole proprietorship',
+  // STILL REQUIRED. Payment gateways check this specifically and a missing address is one
+  // of the most common rejection reasons. Left empty rather than guessed.
   address: '',
-  email: '',
-  phone: '',
+  email: 'yash113gadia@gmail.com',
+  phone: '+91 99500 94483',
+  // Not GST-registered. The GSTIN block is hidden entirely rather than shown empty.
   gstin: '',
-  grievanceOfficerName: '',
-  grievanceOfficerEmail: '',
-  lastUpdated: '',
+  grievanceOfficerName: 'Yash Gadia',
+  grievanceOfficerEmail: 'yash113gadia@gmail.com',
+  lastUpdated: '20 August 2026',
+  // STILL REQUIRED. What a college or canteen actually pays to be on the platform.
   pricingDetail: '',
 };
 
