@@ -27,6 +27,7 @@ export default function Footer() {
               </span>
               BiteSite
             </Link>
+            {business.legalName && <p className="footer__byline">by {business.legalName}</p>}
             <p className="footer__blurb">
               Order ahead from your college canteen, pay online, and collect it at the counter
               without standing in the queue.

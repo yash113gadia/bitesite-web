@@ -40,7 +40,10 @@ export interface BusinessInfo {
 }
 
 export const business: BusinessInfo = {
-  legalName: 'BiteSite',
+  // The operating entity, not the product. BiteSite is the service; Anvaya Labs is who
+  // runs it, and this is the name that must match the settlement bank account and KYC
+  // documents — the legal pages all read "operated by {legalName}".
+  legalName: 'Anvaya Labs',
   entityType: 'Sole proprietorship',
   // STILL REQUIRED. Payment gateways check this specifically and a missing address is one
   // of the most common rejection reasons. Left empty rather than guessed.

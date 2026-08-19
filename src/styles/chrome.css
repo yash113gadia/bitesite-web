@@ -190,6 +190,16 @@
   color: var(--cream);
   text-decoration: none;
 }
+.footer__byline {
+  margin: 0.5rem 0 0;
+  font-family: var(--font-mark);
+  font-size: var(--t-fine);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--clay-soft);
+}
+
 .footer__blurb {
   margin-top: var(--gap-sm);
   max-width: 34ch;
