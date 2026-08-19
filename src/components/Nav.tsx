@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { portals } from '../config/business';
 
 const LINKS = [
@@ -13,7 +13,6 @@ const LINKS = [
 export default function Nav() {
   const [open, setOpen] = useState(false);
   const [stuck, setStuck] = useState(false);
-  const location = useLocation();
 
   useEffect(() => {
     const onScroll = () => setStuck(window.scrollY > 8);
@@ -22,13 +21,14 @@ export default function Nav() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Close the mobile sheet on navigation, otherwise it covers the new page.
-  useEffect(() => setOpen(false), [location.pathname, location.hash]);
+  // Closing the mobile sheet belongs to the tap that navigates, not to an effect watching
+  // the location — otherwise every navigation schedules an extra render just to close it.
+  const close = () => setOpen(false);
 
   return (
     <header className={`nav${stuck ? ' is-stuck' : ''}`}>
       <div className="shell nav__inner">
-        <Link to="/" className="nav__mark">
+        <Link to="/" className="nav__mark" onClick={close}>
           <span className="nav__markDot" aria-hidden="true">
             B
           </span>
@@ -50,12 +50,12 @@ export default function Nav() {
 
         <nav id="nav-links" className="nav__links" data-open={open} aria-label="Main">
           {LINKS.map((l) => (
-            <NavLink key={l.to} to={l.to} className="nav__link">
+            <NavLink key={l.to} to={l.to} className="nav__link" onClick={close}>
               {l.label}
             </NavLink>
           ))}
           {/* www is the marketing site only — the product itself lives on app. */}
-          <a className="btn btn--primary nav__cta" href={portals.app}>
+          <a className="btn btn--primary nav__cta" href={portals.app} onClick={close}>
             Open BiteSite
           </a>
         </nav>
