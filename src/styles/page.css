@@ -1,0 +1,322 @@
+/* Content pages: policies, about, contact, pricing. */
+
+.pageHero {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(2.75rem, 2rem + 3vw, 4.5rem) clamp(2rem, 1.5rem + 2vw, 3rem);
+  background: var(--cream-deep);
+  border-bottom: 1px solid var(--rule);
+}
+.pageHero::before {
+  content: '';
+  position: absolute;
+  inset: -60% -20% auto 40%;
+  height: 200%;
+  background: radial-gradient(42% 40% at 50% 50%, rgba(242, 176, 140, 0.42), transparent 70%);
+  pointer-events: none;
+}
+.pageHero__inner {
+  position: relative;
+}
+.pageHero__title {
+  margin-top: var(--gap-sm);
+  max-width: 22ch;
+}
+.pageHero__lede {
+  margin-top: var(--gap-md);
+  font-size: var(--t-lede);
+  color: var(--ink-soft);
+  max-width: 58ch;
+}
+.pageHero__meta {
+  margin-top: var(--gap-md);
+  font-size: var(--t-fine);
+  color: var(--ink-muted);
+}
+
+/* ── Prose ────────────────────────────────────────────────────── */
+
+.prose {
+  padding-block: var(--section-y);
+}
+.prose__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 220px) minmax(0, 1fr);
+  gap: clamp(2rem, 1rem + 4vw, 4.5rem);
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .prose__inner {
+    grid-template-columns: 1fr;
+    gap: var(--gap-lg);
+  }
+}
+
+/* Sticky contents rail — long policy pages are navigated, not read start to finish. */
+.toc {
+  position: sticky;
+  top: 100px;
+}
+@media (max-width: 900px) {
+  .toc {
+    position: static;
+    border: 1px solid var(--rule);
+    border-radius: var(--r-md);
+    padding: var(--gap-md);
+    background: var(--paper);
+  }
+}
+.toc__title {
+  font-family: var(--font-mark);
+  font-size: var(--t-fine);
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin: 0 0 var(--gap-sm);
+}
+.toc__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  counter-reset: toc;
+}
+.toc__list a {
+  display: block;
+  font-size: var(--t-small);
+  color: var(--ink-muted);
+  text-decoration: none;
+  padding: 0.4rem 0.6rem;
+  border-left: 2px solid var(--rule);
+  transition: color 0.18s var(--ease-out), border-color 0.18s var(--ease-out),
+    background-color 0.18s var(--ease-out);
+}
+.toc__list a:hover {
+  color: var(--ink);
+  border-left-color: var(--terracotta);
+  background: rgba(217, 87, 44, 0.06);
+}
+
+.proseBody > section + section {
+  margin-top: var(--gap-xl);
+}
+.proseBody h2 {
+  font-size: var(--t-h3);
+  scroll-margin-top: 100px;
+  margin-bottom: var(--gap-sm);
+}
+.proseBody h2::before {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--terracotta);
+  margin-bottom: var(--gap-sm);
+}
+.proseBody p {
+  color: var(--ink-soft);
+  max-width: var(--measure);
+}
+.proseBody p + p {
+  margin-top: var(--gap-sm);
+}
+.proseBody ul {
+  margin: var(--gap-sm) 0 0;
+  padding-left: 1.15rem;
+  max-width: var(--measure);
+  color: var(--ink-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.proseBody li::marker {
+  color: var(--terracotta);
+}
+.proseBody strong {
+  color: var(--ink);
+}
+
+/* ── Callout ──────────────────────────────────────────────────── */
+
+.callout {
+  margin-top: var(--gap-md);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--terracotta);
+  border-radius: var(--r-sm);
+  background: var(--paper);
+  padding: var(--gap-md);
+  max-width: var(--measure);
+}
+.callout__title {
+  font-family: var(--font-mark);
+  font-weight: 700;
+  font-size: var(--t-small);
+  margin: 0 0 0.35rem;
+}
+.callout p {
+  font-size: var(--t-small);
+  margin: 0;
+}
+.callout--moss {
+  border-left-color: var(--moss);
+}
+
+/* ── Contact ──────────────────────────────────────────────────── */
+
+.contactGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--gap-md);
+  margin-bottom: var(--gap-xl);
+}
+.contactCard {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  padding: var(--gap-md);
+  box-shadow: var(--shadow-sm);
+}
+.contactCard--accent {
+  background: var(--terracotta-tint);
+  border-color: rgba(217, 87, 44, 0.28);
+}
+.contactCard__label {
+  font-family: var(--font-mark);
+  font-size: var(--t-fine);
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin: 0 0 var(--gap-xs);
+}
+.contactCard__value {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--ink);
+  font-style: normal;
+  line-height: 1.5;
+}
+.contactCard__value a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 2px solid var(--clay);
+}
+.contactCard__value a:hover {
+  border-bottom-color: var(--terracotta);
+}
+.contactCard__note {
+  margin-top: var(--gap-xs);
+  font-size: var(--t-fine);
+  color: var(--ink-muted);
+}
+
+/* Placeholder shown when a business detail is not configured yet. */
+.pending {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: var(--t-small);
+  font-weight: 500;
+  font-style: italic;
+  color: #8a5f11;
+  background: var(--saffron-tint);
+  border: 1px dashed rgba(232, 163, 61, 0.6);
+  border-radius: var(--r-xs);
+  padding: 0.15rem 0.5rem;
+}
+
+/* ── Pricing ──────────────────────────────────────────────────── */
+
+.priceGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--gap-md);
+}
+.priceCard {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  padding: clamp(1.5rem, 1.2rem + 1vw, 2.2rem);
+  display: flex;
+  flex-direction: column;
+}
+.priceCard--lead {
+  background: var(--umber);
+  color: #ded5c8;
+  border-color: var(--umber);
+}
+.priceCard--lead .priceCard__title,
+.priceCard--lead .priceCard__figure {
+  color: var(--cream);
+}
+.priceCard__title {
+  font-size: var(--t-h3);
+  margin-bottom: var(--gap-xs);
+}
+.priceCard__figure {
+  font-family: var(--font-mark);
+  font-size: 2.4rem;
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--ink);
+  margin: var(--gap-sm) 0;
+}
+.priceCard__body {
+  font-size: var(--t-small);
+  color: inherit;
+  opacity: 0.86;
+}
+.priceCard__list {
+  list-style: none;
+  margin: var(--gap-md) 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  font-size: var(--t-small);
+}
+.priceCard__list li {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+}
+.priceCard__cta {
+  margin-top: var(--gap-lg);
+  align-self: flex-start;
+}
+
+/* ── Simple feature rows used on How it works / For canteens ──── */
+
+.rowList {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid var(--rule);
+}
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: var(--gap-lg);
+  padding-block: var(--gap-lg);
+  border-bottom: 1px solid var(--rule);
+  align-items: start;
+}
+@media (max-width: 780px) {
+  .row {
+    grid-template-columns: 1fr;
+    gap: var(--gap-sm);
+  }
+}
+.row__title {
+  font-size: var(--t-h3);
+}
+.row__body p {
+  color: var(--ink-muted);
+  max-width: 58ch;
+}
+.row__body p + p {
+  margin-top: var(--gap-sm);
+}

@@ -1,0 +1,275 @@
+/* Reset, typography, and the primitives shared by every page. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--t-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* ── Type ─────────────────────────────────────────────────────── */
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+  margin: 0;
+  /* Fraunces is variable: dial in a little softness and optical sizing. */
+  font-variation-settings: 'SOFT' 28, 'WONK' 1, 'opsz' 40;
+}
+
+h1 {
+  font-size: var(--t-h1);
+}
+h2 {
+  font-size: var(--t-h2);
+}
+h3 {
+  font-size: var(--t-h3);
+  letter-spacing: -0.008em;
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--terracotta-deep);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+a:hover {
+  color: var(--terracotta);
+}
+
+strong {
+  font-weight: 600;
+}
+
+::selection {
+  background: var(--terracotta);
+  color: var(--cream);
+}
+
+/* ── Shell ────────────────────────────────────────────────────── */
+
+.shell {
+  width: 100%;
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding-inline: clamp(1.15rem, 0.6rem + 2.4vw, 2.5rem);
+}
+
+.section {
+  padding-block: var(--section-y);
+}
+
+.measure {
+  max-width: var(--measure);
+}
+
+/* ── Eyebrow ──────────────────────────────────────────────────── */
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-2xs);
+  font-family: var(--font-mark);
+  font-size: var(--t-fine);
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--terracotta-deep);
+  background: var(--terracotta-tint);
+  border-radius: var(--r-pill);
+  padding: 0.4rem 0.9rem;
+  margin: 0;
+}
+
+.eyebrow--moss {
+  color: var(--moss);
+  background: var(--moss-tint);
+}
+.eyebrow--saffron {
+  color: #8a5f11;
+  background: var(--saffron-tint);
+}
+.eyebrow--onDark {
+  color: var(--clay-soft);
+  background: rgba(247, 201, 172, 0.14);
+}
+
+/* ── Buttons ──────────────────────────────────────────────────── */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  font-family: var(--font-body);
+  font-size: var(--t-small);
+  font-weight: 600;
+  line-height: 1;
+  padding: 0.95rem 1.6rem;
+  border-radius: var(--r-pill);
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    transform 0.22s var(--ease-out),
+    background-color 0.22s var(--ease-out),
+    border-color 0.22s var(--ease-out),
+    box-shadow 0.22s var(--ease-out),
+    color 0.22s var(--ease-out);
+}
+
+.btn--primary {
+  background: var(--terracotta);
+  color: #fff;
+  box-shadow: var(--shadow-warm);
+}
+.btn--primary:hover {
+  background: var(--terracotta-deep);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 22px 50px -20px rgba(184, 69, 31, 0.6);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--rule-strong);
+}
+.btn--ghost:hover {
+  background: var(--paper);
+  color: var(--ink);
+  border-color: var(--ink);
+  transform: translateY(-2px);
+}
+
+.btn--onDark {
+  background: var(--cream);
+  color: var(--ink);
+}
+.btn--onDark:hover {
+  background: #fff;
+  color: var(--ink);
+  transform: translateY(-2px);
+}
+
+.btn--ghostOnDark {
+  background: transparent;
+  color: var(--cream);
+  border-color: rgba(251, 248, 243, 0.32);
+}
+.btn--ghostOnDark:hover {
+  background: rgba(251, 248, 243, 0.1);
+  color: #fff;
+  border-color: rgba(251, 248, 243, 0.6);
+  transform: translateY(-2px);
+}
+
+/* Press feedback — must also fire on touch, where :hover never does. */
+.btn:active {
+  transform: translateY(0) scale(0.985);
+}
+
+/* ── Focus ────────────────────────────────────────────────────── */
+
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2.5px solid var(--terracotta);
+  outline-offset: 3px;
+  border-radius: var(--r-xs);
+}
+
+.skip-link {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  translate: -50% -120%;
+  z-index: 200;
+  background: var(--ink);
+  color: var(--cream);
+  padding: 0.75rem 1.25rem;
+  border-radius: 0 0 var(--r-sm) var(--r-sm);
+  font-size: var(--t-small);
+  font-weight: 600;
+  text-decoration: none;
+  transition: translate 0.2s var(--ease-out);
+}
+.skip-link:focus-visible {
+  translate: -50% 0;
+  color: var(--cream);
+}
+
+/* ── Grain: breaks the flatness of the large cream fields ─────── */
+
+.grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.32;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
+/* ── Scroll reveal ────────────────────────────────────────────── */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.7s var(--ease-out),
+    transform 0.7s var(--ease-out);
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

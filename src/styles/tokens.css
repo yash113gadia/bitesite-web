@@ -1,0 +1,86 @@
+/*
+ * Design tokens.
+ *
+ * The palette and the wordmark face are inherited from the live product (app.bitesite.in)
+ * so the marketing site and the app read as one brand. What is new here is the display
+ * face: the app uses Baloo 2 everywhere, which is warm but reads playful at poster sizes.
+ * Fraunces carries the same warmth with enough editorial weight to look like a real
+ * company, which this site has to do — it is also the business website a payment gateway
+ * reviews. Baloo 2 is kept, but narrowed to the wordmark and numerals.
+ *
+ * This site commits to one warm, light look rather than offering a dark theme: the ground
+ * IS the brand. Every color is therefore painted explicitly, never inherited.
+ */
+
+:root {
+  /* ── Ground and ink ─────────────────────────────────────────── */
+  --cream: #fbf8f3;
+  --cream-deep: #f4ede1;
+  --paper: #ffffff;
+  --ink: #1f1b16;
+  --ink-soft: #4a423a;
+  --ink-muted: #6b6258;
+  --ink-faint: #9a9086;
+  --rule: #e8e1d6;
+  --rule-strong: #d9cfc0;
+
+  /* ── Brand ──────────────────────────────────────────────────── */
+  --terracotta: #d9572c;
+  --terracotta-deep: #b8451f;
+  --terracotta-tint: #fce9df;
+  --saffron: #e8a33d;
+  --saffron-tint: #fbf0da;
+  --clay: #f2b08c;
+  --clay-soft: #f7c9ac;
+  --moss: #3f6b4a;
+  --moss-tint: #e4eee6;
+
+  /* Deep ground for the one inverted section — warm, never neutral black. */
+  --umber: #241e18;
+  --umber-soft: #33291f;
+
+  /* ── Type ───────────────────────────────────────────────────── */
+  --font-display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mark: 'Baloo 2', 'Plus Jakarta Sans', sans-serif;
+
+  /* Fluid display scale. Body sizes stay fixed so line length stays honest. */
+  --t-hero: clamp(2.75rem, 1.6rem + 4.6vw, 5.25rem);
+  --t-h1: clamp(2.1rem, 1.4rem + 2.8vw, 3.4rem);
+  --t-h2: clamp(1.7rem, 1.25rem + 1.8vw, 2.5rem);
+  --t-h3: clamp(1.25rem, 1.1rem + 0.7vw, 1.6rem);
+  --t-lede: clamp(1.05rem, 0.98rem + 0.4vw, 1.28rem);
+  --t-body: 1.0625rem;
+  --t-small: 0.9375rem;
+  --t-fine: 0.8125rem;
+
+  /* ── Space ──────────────────────────────────────────────────── */
+  --gap-2xs: 0.375rem;
+  --gap-xs: 0.625rem;
+  --gap-sm: 1rem;
+  --gap-md: 1.5rem;
+  --gap-lg: 2.5rem;
+  --gap-xl: 4rem;
+  --gap-2xl: 6rem;
+  --section-y: clamp(4rem, 3rem + 6vw, 8rem);
+
+  --shell: 1200px;
+  --measure: 62ch;
+
+  /* ── Form ───────────────────────────────────────────────────── */
+  --r-xs: 8px;
+  --r-sm: 14px;
+  --r-md: 22px;
+  --r-lg: 32px;
+  --r-xl: 44px;
+  --r-pill: 999px;
+
+  /* Shadows carry the ground's hue rather than neutral black. */
+  --shadow-sm: 0 1px 2px rgba(31, 27, 22, 0.05);
+  --shadow-md: 0 14px 34px -18px rgba(31, 27, 22, 0.28);
+  --shadow-lg: 0 30px 64px -28px rgba(31, 27, 22, 0.34);
+  --shadow-warm: 0 18px 44px -22px rgba(184, 69, 31, 0.45);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
