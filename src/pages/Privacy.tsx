@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import PolicyPage, { type PolicySection } from '../components/PolicyPage';
 import Detail from '../components/Detail';
-import { business, operatorFullName, portals } from '../config/business';
+import { business, hasAddress, operatorFullName, portals } from '../config/business';
 
 const sections: PolicySection[] = [
   {
@@ -270,8 +270,12 @@ const sections: PolicySection[] = [
             ) : (
               <Detail value="" label="Officer email" />
             )}
-            <br />
-            <Detail value={business.address} label="Registered address" />
+            {hasAddress() && (
+              <>
+                <br />
+                {business.address}
+              </>
+            )}
           </p>
         </div>
         <p>

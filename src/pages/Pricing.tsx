@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import Seo from '../components/Seo';
-import Detail from '../components/Detail';
 import { business, portals } from '../config/business';
 import { useReveal } from '../hooks/useReveal';
 
@@ -60,11 +59,10 @@ export default function Pricing() {
             <article className="priceCard priceCard--lead">
               <h2 className="priceCard__title">For colleges and canteens</h2>
               <p className="priceCard__figure">
-                {business.pricingDetail ? (
-                  business.pricingDetail
-                ) : (
-                  <Detail value="" label="Commercial terms" />
-                )}
+                {/* No fixed public rate card yet. Stating that terms are agreed per campus
+                    is the honest version of the model already described below — not a
+                    placeholder, and not an invented figure. */}
+                {business.pricingDetail || 'Agreed per campus'}
               </p>
               <p className="priceCard__body">
                 The platform is funded by the college or the canteen operator, not by charging

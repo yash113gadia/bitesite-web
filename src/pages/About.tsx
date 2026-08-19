@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import Seo from '../components/Seo';
 import Detail from '../components/Detail';
-import { business, hasGstin, operatorFullName, portals } from '../config/business';
+import { business, hasAddress, hasGstin, operatorFullName, portals } from '../config/business';
 import { useReveal } from '../hooks/useReveal';
 
 const ROWS = [
@@ -95,12 +95,12 @@ export default function About() {
                 <Detail value={business.entityType} label="Entity type" />
               </p>
             </div>
-            <div className="contactCard">
-              <p className="contactCard__label">Registered address</p>
-              <address className="contactCard__value">
-                <Detail value={business.address} label="Registered address" />
-              </address>
-            </div>
+            {hasAddress() && (
+              <div className="contactCard">
+                <p className="contactCard__label">Registered address</p>
+                <address className="contactCard__value">{business.address}</address>
+              </div>
+            )}
             <div className="contactCard">
               <p className="contactCard__label">Contact</p>
               <p className="contactCard__value">

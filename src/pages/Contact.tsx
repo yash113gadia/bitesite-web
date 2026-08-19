@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import Seo from '../components/Seo';
 import Detail from '../components/Detail';
-import { business, hasGstin, operatorFullName, portals } from '../config/business';
+import { business, hasAddress, hasGstin, operatorFullName, portals } from '../config/business';
 import { useReveal } from '../hooks/useReveal';
 
 export default function Contact() {
@@ -11,7 +11,7 @@ export default function Contact() {
     <>
       <Seo
         title="Contact BiteSite"
-        description="Contact BiteSite: registered address, support email and phone, order support, and our grievance officer as required under Indian law."
+        description="Contact BiteSite: support email and phone, help with an order, and our grievance officer as required under Indian law."
         path="/contact"
       />
 
@@ -60,13 +60,22 @@ export default function Contact() {
             </div>
 
             <div className="contactCard">
-              <p className="contactCard__label">Registered address</p>
+              <p className="contactCard__label">
+                {hasAddress() ? 'Registered address' : 'Business details'}
+              </p>
               <address className="contactCard__value">
-                <Detail value={operatorFullName()} label="Legal name" />
-                <br />
-                <Detail value={business.address} label="Registered address" />
+                {operatorFullName()}
+                {hasAddress() && (
+                  <>
+                    <br />
+                    {business.address}
+                  </>
+                )}
               </address>
-              {hasGstin() && <p className="contactCard__note">GSTIN: {business.gstin}</p>}
+              <p className="contactCard__note">
+                {business.entityType}
+                {hasGstin() && <> · GSTIN: {business.gstin}</>}
+              </p>
             </div>
           </div>
 
@@ -124,8 +133,12 @@ export default function Contact() {
                     ) : (
                       <Detail value="" label="Officer email" />
                     )}
-                    <br />
-                    <Detail value={business.address} label="Registered address" />
+                    {hasAddress() && (
+                      <>
+                        <br />
+                        {business.address}
+                      </>
+                    )}
                   </p>
                 </div>
                 <p>
