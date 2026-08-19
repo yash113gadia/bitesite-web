@@ -246,63 +246,176 @@
   }
 }
 
-/* ── Steps: a horizontal run, not a row of equal cards ────────── */
+/* ── Steps ────────────────────────────────────────────────────────
+   An <ol>, so the number is real structure rather than decoration — which
+   means list-style must be off, or the browser marker renders alongside the
+   badge and every step reads "1. 1". */
 
 .steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 0;
-  border-top: 2px solid var(--ink);
+  gap: var(--gap-md);
+  counter-reset: step;
 }
-@media (max-width: 860px) {
+@media (max-width: 900px) {
   .steps {
     grid-template-columns: 1fr 1fr;
   }
 }
-@media (max-width: 520px) {
+@media (max-width: 560px) {
   .steps {
     grid-template-columns: 1fr;
   }
 }
 
 .step {
-  padding: var(--gap-md) var(--gap-md) var(--gap-lg) 0;
-  border-right: 1px solid var(--rule);
   position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: var(--gap-md);
+  padding-top: 4.5rem;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition:
+    transform 0.3s var(--ease-out),
+    box-shadow 0.3s var(--ease-out);
 }
-.step:last-child {
-  border-right: none;
+.step:hover,
+.step:focus-within {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
 }
-@media (max-width: 860px) {
-  .step {
-    border-right: none;
-    border-bottom: 1px solid var(--rule);
-    padding-right: 0;
-  }
+
+/* Warm wash behind the illustration so the cut-out art has something to sit on
+   instead of floating on flat white. */
+.step::before {
+  content: '';
+  position: absolute;
+  inset: -38% -30% auto -30%;
+  height: 15rem;
+  background: radial-gradient(50% 50% at 50% 62%, var(--clay-soft), transparent 70%);
+  pointer-events: none;
+}
+
+.step__art {
+  position: absolute;
+  top: 0.35rem;
+  right: 0.5rem;
+  width: 92px;
+  height: 92px;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 16px rgba(31, 27, 22, 0.18));
+  transform: rotate(-6deg);
+  transition: transform 0.35s var(--ease-spring);
+  pointer-events: none;
+}
+.step:hover .step__art {
+  transform: rotate(0deg) scale(1.07);
 }
 
 .step__n {
-  display: inline-grid;
+  position: absolute;
+  top: var(--gap-md);
+  left: var(--gap-md);
+  display: grid;
   place-items: center;
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background: var(--ink);
   color: var(--cream);
   font-family: var(--font-mark);
   font-weight: 800;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-variant-numeric: tabular-nums;
-  margin-bottom: var(--gap-sm);
 }
 .step__title {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   margin-bottom: 0.4rem;
 }
 .step__body {
   font-size: var(--t-small);
   color: var(--ink-muted);
-  max-width: 32ch;
+}
+
+/* ── Menu band: what these illustrations are actually for ─────── */
+
+.menuBand {
+  background: var(--umber);
+  color: var(--cream);
+  padding-block: var(--section-y);
+  overflow: hidden;
+  position: relative;
+}
+.menuBand__head {
+  text-align: center;
+  margin-bottom: var(--gap-xl);
+}
+.menuBand__title {
+  color: var(--cream);
+  margin-top: var(--gap-sm);
+}
+.menuBand__lede {
+  margin: var(--gap-sm) auto 0;
+  color: #b9ad9c;
+  max-width: 52ch;
+  font-size: var(--t-lede);
+}
+
+/* Edge-to-edge marquee, so it reads as a counter you walk past. */
+.marquee {
+  display: flex;
+  width: max-content;
+  gap: var(--gap-md);
+  animation: marquee 46s linear infinite;
+}
+.marquee:hover {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    animation: none;
+    flex-wrap: wrap;
+    width: auto;
+    justify-content: center;
+  }
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.dish {
+  flex: none;
+  width: 168px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+  padding: var(--gap-md) var(--gap-sm);
+  background: rgba(251, 248, 243, 0.05);
+  border: 1px solid rgba(251, 248, 243, 0.12);
+  border-radius: var(--r-md);
+}
+.dish__img {
+  width: 104px;
+  height: 104px;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.4));
+}
+.dish__name {
+  font-family: var(--font-mark);
+  font-weight: 700;
+  font-size: var(--t-small);
+  text-align: center;
+  color: var(--cream);
 }
 
 /* ── Two-audience split ───────────────────────────────────────── */

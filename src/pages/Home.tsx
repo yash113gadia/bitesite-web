@@ -8,19 +8,43 @@ const STEPS = [
   {
     title: 'Pick your college',
     body: 'Your account belongs to one campus, so you only ever see your own canteens and their menus.',
+    art: '/food/food_dosa.png',
   },
   {
     title: 'Order before you leave class',
     body: 'Browse the live menu, check what is actually available today, and build your order in a few taps.',
+    art: '/food/food_wrap.png',
   },
   {
     title: 'Pay online',
     body: 'Payment is confirmed through Razorpay before the kitchen starts. Nothing is cooked against an unpaid order.',
+    art: '/food/food_paratha.png',
   },
   {
     title: 'Collect at the counter',
     body: 'You get a notification the moment it is ready. Walk up, show your order, and get on with your break.',
+    art: '/food/food_chai.png',
   },
+];
+
+/**
+ * The canteen categories the platform actually carries. Deliberately excludes the
+ * delivery-scooter artwork from the app: BiteSite is counter pickup only, and our own
+ * shipping policy says so, so a rider on this page would contradict it.
+ */
+const DISHES = [
+  { img: '/food/food_wrap.png', name: 'Rolls & wraps' },
+  { img: '/food/food_paratha.png', name: 'Stuffed parathas' },
+  { img: '/food/food_dosa.png', name: 'Dosa & sambar' },
+  { img: '/food/food_maggi.png', name: 'Maggi & noodles' },
+  { img: '/food/food_puff.png', name: 'Puffs & samosas' },
+  { img: '/food/food_sandwich.png', name: 'Grilled sandwiches' },
+  { img: '/food/food_chai.png', name: 'Kulhad chai' },
+  { img: '/food/food_shake.png', name: 'Cold coffee & shakes' },
+  { img: '/food/food_burger.png', name: 'Burgers & fries' },
+  { img: '/food/food_spaghetti.png', name: 'Pasta' },
+  { img: '/food/food_ramen.png', name: 'Ramen & soups' },
+  { img: '/food/food_chicken.png', name: 'Chicken plates' },
 ];
 
 const TRUST = [
@@ -212,11 +236,39 @@ export default function Home() {
             {STEPS.map((s, i) => (
               <li className="step" key={s.title}>
                 <span className="step__n">{i + 1}</span>
+                <img className="step__art" src={s.art} alt="" aria-hidden="true" loading="lazy" />
                 <h3 className="step__title">{s.title}</h3>
                 <p className="step__body">{s.body}</p>
               </li>
             ))}
           </ol>
+        </div>
+      </section>
+
+      {/* ── What's on the counter ── */}
+      <section className="menuBand" id="menu">
+        <div className="shell menuBand__head">
+          <p className="eyebrow eyebrow--onDark">On the counter</p>
+          <h2 className="menuBand__title">The food your canteen already makes.</h2>
+          <p className="menuBand__lede">
+            BiteSite does not change the menu — your canteen sets its own items, prices and
+            availability. It only changes how you get hold of them.
+          </p>
+        </div>
+        <div className="marquee">
+          {/* Rendered twice so the loop is seamless; the copy is hidden from assistive tech. */}
+          {[0, 1].map((pass) =>
+            DISHES.map((d) => (
+              <figure
+                className="dish"
+                key={`${pass}-${d.name}`}
+                aria-hidden={pass === 1 ? true : undefined}
+              >
+                <img className="dish__img" src={d.img} alt="" loading="lazy" />
+                <figcaption className="dish__name">{d.name}</figcaption>
+              </figure>
+            )),
+          )}
         </div>
       </section>
 
