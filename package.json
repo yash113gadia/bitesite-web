@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && cp dist/index.html dist/404.html",
+    "build": "tsc -b && vite build && npm run prerender",
     "lint": "oxlint",
     "preview": "vite preview",
-    "smoke": "vite build --ssr scripts/ssr-smoke.tsx --outDir dist-ssr && node dist-ssr/ssr-smoke.js"
+    "smoke": "vite build --ssr scripts/ssr-smoke.tsx --outDir dist-ssr && node dist-ssr/ssr-smoke.js",
+    "prerender": "vite build --ssr scripts/prerender.tsx --outDir dist-ssr && node dist-ssr/prerender.js"
   },
   "dependencies": {
     "react": "^19.2.8",
