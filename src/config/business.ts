@@ -14,9 +14,15 @@
  * ── TO GO LIVE, FILL IN EVERY FIELD BELOW ──
  */
 export interface BusinessInfo {
-  /** Exact registered name, as it appears on the bank account and KYC documents. */
+  /**
+   * Exact registered name, as it appears on the settlement bank account and KYC documents.
+   * For a sole proprietorship this is the proprietor's own name, not the brand — a gateway
+   * matches this string against the bank account, and a mismatch is a direct rejection.
+   */
   legalName: string;
-  /** e.g. "Sole Proprietorship", "Private Limited Company", "LLP", "Registered Partnership". */
+  /** The name the business trades under, if different from {@link legalName}. */
+  tradeName: string;
+  /** e.g. "Sole proprietorship", "Private limited company", "LLP", "Registered partnership". */
   entityType: string;
   /** Full registered/operating address including city, state and PIN code. */
   address: string;
@@ -40,10 +46,11 @@ export interface BusinessInfo {
 }
 
 export const business: BusinessInfo = {
-  // The operating entity, not the product. BiteSite is the service; Anvaya Labs is who
-  // runs it, and this is the name that must match the settlement bank account and KYC
-  // documents — the legal pages all read "operated by {legalName}".
-  legalName: 'Anvaya Labs',
+  // Sole proprietorship: the settlement account is in the proprietor's own name, so that
+  // is the legal name a gateway will match. Anvaya Labs is the trading name and BiteSite
+  // is the product; all three are published together so nothing looks inconsistent.
+  legalName: 'Yash Gadia',
+  tradeName: 'Anvaya Labs',
   entityType: 'Sole proprietorship',
   // STILL REQUIRED. Payment gateways check this specifically and a missing address is one
   // of the most common rejection reasons. Left empty rather than guessed.
@@ -67,6 +74,16 @@ export const portals = {
 } as const;
 
 const filled = (v: string) => v.trim().length > 0;
+
+/**
+ * How the operator is named in legal copy: the bank-matching legal name, plus the trading
+ * name the public actually recognises. Publishing both is what keeps "Yash Gadia" on the
+ * bank account and "Anvaya Labs" on the website from looking like a discrepancy.
+ */
+export const operatorFullName = (): string =>
+  filled(business.tradeName) && filled(business.legalName)
+    ? `${business.legalName} (trading as ${business.tradeName})`
+    : business.legalName;
 
 /** Enough detail to render a real contact block: a named entity plus a way to reach it. */
 export const hasIdentity = () =>

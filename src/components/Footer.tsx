@@ -8,6 +8,7 @@ import {
   hasIdentity,
   hasPhone,
   missingBusinessFields,
+  operatorFullName,
   portals,
 } from '../config/business';
 
@@ -27,7 +28,9 @@ export default function Footer() {
               </span>
               BiteSite
             </Link>
-            {business.legalName && <p className="footer__byline">by {business.legalName}</p>}
+            {/* The trading name, which is what people recognise. The bank-matching legal
+                name appears in the merchant identity block below. */}
+            {business.tradeName && <p className="footer__byline">by {business.tradeName}</p>}
             <p className="footer__blurb">
               Order ahead from your college canteen, pay online, and collect it at the counter
               without standing in the queue.
@@ -96,8 +99,8 @@ export default function Footer() {
             <div className="footer__idItem">
               <span className="footer__idLabel">Operated by</span>
               <span className="footer__idValue">
-                {business.legalName}
-                {business.entityType && <> ({business.entityType})</>}
+                {operatorFullName()}
+                {business.entityType && <> — {business.entityType}</>}
               </span>
             </div>
             {hasAddress() && (

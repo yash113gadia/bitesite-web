@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import PolicyPage, { type PolicySection } from '../components/PolicyPage';
 import Detail from '../components/Detail';
-import { business, portals } from '../config/business';
+import { operatorFullName, portals } from '../config/business';
 
 const sections: PolicySection[] = [
   {
@@ -12,7 +12,7 @@ const sections: PolicySection[] = [
         <p>
           These terms govern your use of BiteSite, the canteen pre-ordering service operated by{' '}
           <strong>
-            <Detail value={business.legalName} label="Operator legal name" />
+            <Detail value={operatorFullName()} label="Operator legal name" />
           </strong>
           , available at www.bitesite.in and at the app, outlet and admin portals on the
           bitesite.in domain.

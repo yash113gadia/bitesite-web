@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import PolicyPage, { type PolicySection } from '../components/PolicyPage';
 import Detail from '../components/Detail';
-import { business, portals } from '../config/business';
+import { business, operatorFullName, portals } from '../config/business';
 
 const sections: PolicySection[] = [
   {
@@ -12,7 +12,7 @@ const sections: PolicySection[] = [
         <p>
           This policy explains how{' '}
           <strong>
-            <Detail value={business.legalName} label="Operator legal name" />
+            <Detail value={operatorFullName()} label="Operator legal name" />
           </strong>{' '}
           handles personal data in BiteSite, the canteen pre-ordering service. It covers the
           marketing site at www.bitesite.in and the student, canteen and administration portals on

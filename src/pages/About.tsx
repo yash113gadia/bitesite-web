@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import Seo from '../components/Seo';
 import Detail from '../components/Detail';
-import { business, hasGstin, portals } from '../config/business';
+import { business, hasGstin, operatorFullName, portals } from '../config/business';
 import { useReveal } from '../hooks/useReveal';
 
 const ROWS = [
@@ -89,7 +89,7 @@ export default function About() {
             <div className="contactCard">
               <p className="contactCard__label">Legal entity</p>
               <p className="contactCard__value">
-                <Detail value={business.legalName} label="Legal name" />
+                <Detail value={operatorFullName()} label="Legal name" />
               </p>
               <p className="contactCard__note">
                 <Detail value={business.entityType} label="Entity type" />
