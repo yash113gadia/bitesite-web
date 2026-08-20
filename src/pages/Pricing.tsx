@@ -17,7 +17,9 @@ export default function Pricing() {
       <header className="pageHero">
         <div className="shell pageHero__inner">
           <p className="eyebrow">Pricing</p>
-          <h1 className="pageHero__title">Students pay for food. Canteens pay for the platform.</h1>
+          <h1 className="pageHero__title">
+            Students pay for food. Canteens pay <span className="say">for the platform.</span>
+          </h1>
           <p className="pageHero__lede">
             No hidden charges at checkout and no surprise fees. Here is exactly who pays what, and
             for what.
@@ -44,14 +46,14 @@ export default function Pricing() {
                   'Full refund to your original payment method if a paid order is cancelled',
                 ].map((t) => (
                   <li key={t}>
-                    <span className="panel__tick" aria-hidden="true" style={{ background: 'var(--terracotta-tint)', color: 'var(--terracotta-deep)' }}>
-                      ✓
+                    <span className="panel__tick" aria-hidden="true">
+                      —
                     </span>
                     {t}
                   </li>
                 ))}
               </ul>
-              <a className="btn btn--primary priceCard__cta" href={portals.app}>
+              <a className="btn btn--orange priceCard__cta" href={portals.app}>
                 Start ordering
               </a>
             </article>
@@ -79,7 +81,7 @@ export default function Pricing() {
                 ].map((t) => (
                   <li key={t}>
                     <span className="panel__tick" aria-hidden="true">
-                      ✓
+                      —
                     </span>
                     {t}
                   </li>

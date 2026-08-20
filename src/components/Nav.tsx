@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { portals } from '../config/business';
+import BowlMark from './BowlMark';
 
 const LINKS = [
   { to: '/how-it-works', label: 'How it works' },
@@ -29,9 +30,7 @@ export default function Nav() {
     <header className={`nav${stuck ? ' is-stuck' : ''}`}>
       <div className="shell nav__inner">
         <Link to="/" className="nav__mark" onClick={close}>
-          <span className="nav__markDot" aria-hidden="true">
-            B
-          </span>
+          <BowlMark className="nav__markIcon" />
           BiteSite
         </Link>
 
@@ -55,7 +54,7 @@ export default function Nav() {
             </NavLink>
           ))}
           {/* www is the marketing site only — the product itself lives on app. */}
-          <a className="btn btn--primary nav__cta" href={portals.app} onClick={close}>
+          <a className="btn btn--orange nav__cta" href={portals.app} onClick={close}>
             Open BiteSite
           </a>
         </nav>

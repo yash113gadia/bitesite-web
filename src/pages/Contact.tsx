@@ -18,7 +18,9 @@ export default function Contact() {
       <header className="pageHero">
         <div className="shell pageHero__inner">
           <p className="eyebrow">Contact us</p>
-          <h1 className="pageHero__title">Talk to a person, not a form.</h1>
+          <h1 className="pageHero__title">
+            Talk to a person, <span className="say">not a form.</span>
+          </h1>
           <p className="pageHero__lede">
             For anything about a specific order, in-app Support is fastest because your message
             arrives attached to that order. For everything else, use the details below.
@@ -29,7 +31,7 @@ export default function Contact() {
       <section className="section">
         <div className="shell">
           <div className="contactGrid reveal" data-reveal>
-            <div className="contactCard contactCard--accent">
+            <div className="contactCard">
               <p className="contactCard__label">Email us</p>
               <p className="contactCard__value">
                 {business.email ? (
@@ -44,7 +46,7 @@ export default function Contact() {
               </p>
             </div>
 
-            <div className="contactCard contactCard--accent">
+            <div className="contactCard">
               <p className="contactCard__label">Call us</p>
               <p className="contactCard__value">
                 {business.phone ? (

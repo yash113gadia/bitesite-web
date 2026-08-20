@@ -57,13 +57,15 @@ export default function ForCanteens() {
       <header className="pageHero">
         <div className="shell pageHero__inner">
           <p className="eyebrow">For canteens and colleges</p>
-          <h1 className="pageHero__title">Turn the lunch rush into a queue you can see.</h1>
+          <h1 className="pageHero__title">
+            Turn the lunch rush into a queue <span className="say">you can see.</span>
+          </h1>
           <p className="pageHero__lede">
             Instead of a crowd arriving at once with orders you cannot predict, you get a list of
             paid orders you can work through, with the money already collected.
           </p>
           <div className="hero__actions">
-            <Link className="btn btn--primary" to="/contact">
+            <Link className="btn btn--orange" to="/contact">
               Talk to us about your campus
             </Link>
             <a className="btn btn--ghost" href={portals.outlet}>
@@ -93,7 +95,9 @@ export default function ForCanteens() {
       <section className="section cta">
         <div className="shell cta__inner">
           <p className="eyebrow eyebrow--onDark">Next step</p>
-          <h2 className="cta__title">Tell us about your canteen.</h2>
+          <h2 className="cta__title">
+            Tell us about <span className="say">your canteen.</span>
+          </h2>
           <p className="cta__lede">
             Let us know your campus, how many outlets you run, and roughly how many students you
             serve at peak, and we will walk you through what onboarding involves.

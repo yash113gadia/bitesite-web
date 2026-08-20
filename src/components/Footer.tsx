@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import BowlMark from './BowlMark';
 import {
   business,
   hasAddress,
@@ -23,9 +24,7 @@ export default function Footer() {
         <div className="footer__grid">
           <div className="footer__brand">
             <Link to="/" className="footer__mark">
-              <span className="nav__markDot" aria-hidden="true">
-                B
-              </span>
+              <BowlMark className="nav__markIcon" />
               BiteSite
             </Link>
             {/* The trading name, which is what people recognise. The bank-matching legal
@@ -144,10 +143,7 @@ export default function Footer() {
           <span>© {YEAR} BiteSite. All rights reserved.</span>
           <span className="footer__pay">
             Payments secured by
-            <span className="footer__payChip">Razorpay</span>
-            <span className="footer__payChip">UPI</span>
-            <span className="footer__payChip">Cards</span>
-            <span className="footer__payChip">Net banking</span>
+            Razorpay · UPI · Cards · Net banking
           </span>
         </div>
 

@@ -19,7 +19,9 @@ export default function NotFound() {
             style={{ width: 150, margin: '0 auto var(--gap-md)' }}
           />
           <p className="eyebrow">404</p>
-          <h1 style={{ marginTop: 'var(--gap-sm)' }}>That page is not on the menu.</h1>
+          <h1 style={{ marginTop: 'var(--gap-sm)' }}>
+            That page is <span className="say">not on the menu.</span>
+          </h1>
           <p
             className="pageHero__lede"
             style={{ marginInline: 'auto' }}
@@ -28,7 +30,7 @@ export default function NotFound() {
             reachable from the homepage.
           </p>
           <div className="cta__actions" style={{ justifyContent: 'center' }}>
-            <Link className="btn btn--primary" to="/">
+            <Link className="btn btn--orange" to="/">
               Back to the homepage
             </Link>
             <a className="btn btn--ghost" href={portals.app}>

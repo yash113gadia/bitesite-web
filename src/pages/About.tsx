@@ -49,7 +49,9 @@ export default function About() {
       <header className="pageHero">
         <div className="shell pageHero__inner">
           <p className="eyebrow">About us</p>
-          <h1 className="pageHero__title">A queue is a bad use of a 30-minute break.</h1>
+          <h1 className="pageHero__title">
+            A queue is a bad use of <span className="say">a 30-minute break.</span>
+          </h1>
           <p className="pageHero__lede">
             BiteSite is a canteen pre-ordering platform for Indian colleges. Students order and pay
             ahead; canteens cook against orders that are already paid for; nobody stands in line.
@@ -74,11 +76,11 @@ export default function About() {
         </div>
       </section>
 
-      <section className="section trust grain">
+      <section className="section bandSoft">
         <div className="shell">
           <div className="sectionHead reveal" data-reveal>
             <p className="eyebrow">Business details</p>
-            <h2 className="sectionHead__title">Who operates BiteSite</h2>
+            <h2>Who <span className="say">operates BiteSite</span></h2>
             <p className="sectionHead__lede">
               BiteSite is operated by the entity below, which is also the entity behind the payment
               account used to collect payments on the platform.
@@ -130,7 +132,9 @@ export default function About() {
       <section className="section cta">
         <div className="shell cta__inner">
           <p className="eyebrow eyebrow--onDark">Get in touch</p>
-          <h2 className="cta__title">Want BiteSite at your college?</h2>
+          <h2 className="cta__title">
+            Want BiteSite <span className="say">at your college?</span>
+          </h2>
           <p className="cta__lede">
             Onboarding a college means setting up its outlets, staff accounts and menu. Tell us about
             your campus and we will take it from there.

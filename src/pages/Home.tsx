@@ -8,29 +8,49 @@ const STEPS = [
   {
     title: 'Pick your college',
     body: 'Your account belongs to one campus, so you only ever see your own canteens and their menus.',
-    art: '/food/food_dosa.png',
   },
   {
     title: 'Order before you leave class',
     body: 'Browse the live menu, check what is actually available today, and build your order in a few taps.',
-    art: '/food/food_wrap.png',
   },
   {
     title: 'Pay online',
     body: 'Payment is confirmed through Razorpay before the kitchen starts. Nothing is cooked against an unpaid order.',
-    art: '/food/food_paratha.png',
   },
   {
     title: 'Collect at the counter',
     body: 'You get a notification the moment it is ready. Walk up, show your order, and get on with your break.',
-    art: '/food/food_chai.png',
+  },
+];
+
+const TRUST = [
+  {
+    icon: '₹',
+    orange: true,
+    title: 'Paid before it is cooked',
+    body: 'Every order is paid in full through Razorpay before it reaches the kitchen queue, so there are no unpaid orders and no arguments at the counter.',
+  },
+  {
+    icon: '⌾',
+    title: 'We never see your card',
+    body: 'Card, UPI and bank details go straight to Razorpay. BiteSite stores only the amount, the payment reference, and whether it succeeded.',
+  },
+  {
+    icon: '↺',
+    orange: true,
+    title: 'Refunds are issued first',
+    body: 'If a canteen has to cancel a paid order, the refund goes back to your original payment method before the cancellation is even recorded.',
+  },
+  {
+    icon: '⛨',
+    title: 'Your data stays yours',
+    body: 'Passwords and verification codes are stored only as hashes, each college is isolated from every other, and you can delete your account at any time.',
   },
 ];
 
 /**
- * The canteen categories the platform actually carries. Deliberately excludes the
- * delivery-scooter artwork from the app: BiteSite is counter pickup only, and our own
- * shipping policy says so, so a rider on this page would contradict it.
+ * The categories a campus canteen actually carries. Excludes the app's delivery-scooter
+ * artwork on purpose: BiteSite is counter pickup only and our shipping policy says so.
  */
 const DISHES = [
   { img: '/food/food_wrap.png', name: 'Rolls & wraps' },
@@ -45,29 +65,6 @@ const DISHES = [
   { img: '/food/food_spaghetti.png', name: 'Pasta' },
   { img: '/food/food_ramen.png', name: 'Ramen & soups' },
   { img: '/food/food_chicken.png', name: 'Chicken plates' },
-];
-
-const TRUST = [
-  {
-    icon: '₹',
-    title: 'Paid before it is cooked',
-    body: 'Every order is paid in full through Razorpay before it reaches the kitchen queue, so there are no unpaid orders and no arguments at the counter.',
-  },
-  {
-    icon: '🔒',
-    title: 'We never see your card',
-    body: 'Card, UPI and bank details go straight to Razorpay. BiteSite stores only the amount, the payment reference, and whether it succeeded.',
-  },
-  {
-    icon: '↩',
-    title: 'Refunds are issued first',
-    body: 'If a canteen has to cancel a paid order, the refund goes back to your original payment method before the cancellation is even recorded.',
-  },
-  {
-    icon: '🛡',
-    title: 'Your data stays yours',
-    body: 'Passwords and verification codes are stored only as hashes, each college is isolated from every other, and you can delete your account from the app at any time.',
-  },
 ];
 
 const FAQ = [
@@ -97,48 +94,19 @@ const FAQ = [
   },
 ];
 
-function BreakClock() {
+function Wave({ position }: { position: 'top' | 'bottom' }) {
   return (
-    <div className="clock reveal" data-reveal>
-      <p className="clock__title">A 30-minute break, before and after</p>
-      <p className="clock__sub">Illustrative. Real queue times vary by campus and by hour.</p>
-
-      <div className="clock__row">
-        <div className="clock__label">
-          <span className="clock__labelWho">Without BiteSite</span>
-          <span>12 min to eat</span>
-        </div>
-        <div className="clock__bar">
-          <div className="clock__seg clock__seg--queue" style={{ ['--w' as string]: '60%' }}>
-            18 min queueing
-          </div>
-          <div className="clock__seg clock__seg--eat" style={{ ['--w' as string]: '40%' }}>
-            12 min
-          </div>
-        </div>
-      </div>
-
-      <div className="clock__row clock__row--after">
-        <div className="clock__label">
-          <span className="clock__labelWho">With BiteSite</span>
-          <span>28 min to eat</span>
-        </div>
-        <div className="clock__bar">
-          <div className="clock__seg clock__seg--pickup" style={{ ['--w' as string]: '7%' }}>
-            2
-          </div>
-          <div className="clock__seg clock__seg--eat" style={{ ['--w' as string]: '93%' }}>
-            28 min actually eating
-          </div>
-        </div>
-      </div>
-
-      <p className="clock__verdict">
-        <span className="clock__verdictNum">+16</span>
-        <span>minutes of your own break, handed back to you.</span>
-      </p>
-
-      <img className="clock__mascot" src="/mascot/bito-celebrate.png" alt="" aria-hidden="true" />
+    <div className={`wave wave--${position}`} aria-hidden="true">
+      <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d={
+            position === 'top'
+              ? 'M0,64 C240,10 480,110 720,74 C960,38 1200,0 1440,40 L1440,0 L0,0 Z'
+              : 'M0,56 C240,110 480,6 720,42 C960,78 1200,120 1440,72 L1440,120 L0,120 Z'
+          }
+          fill="currentColor"
+        />
+      </svg>
     </div>
   );
 }
@@ -189,33 +157,94 @@ export default function Home() {
       />
 
       {/* ── Hero ── */}
-      <section className="hero grain">
+      <section className="hero">
         <div className="shell hero__inner">
           <div>
-            <p className="eyebrow">College canteen pre-ordering</p>
+            <p className="eyebrow eyebrow--orange">College canteen, ordered ahead</p>
             <h1 className="hero__title">
-              Your lunch break is 30 minutes. The queue eats <em>half of it.</em>
+              Skip the queue.
+              <span className="say">Keep your break.</span>
             </h1>
             <p className="hero__lede">
-              BiteSite lets you order from your own college canteen before you get there, pay
-              online, and walk straight to the counter when it is ready.
+              Order from your own college canteen before you get there, pay online, and collect it
+              at the counter the moment it is ready.
             </p>
             <div className="hero__actions">
-              <a className="btn btn--primary" href={portals.app}>
-                Order from your canteen
+              <a className="btn btn--orange" href={portals.app}>
+                Start ordering
               </a>
-              <Link className="btn btn--ghost" to="/how-it-works">
+              <Link className="btn btn--plain" to="/how-it-works">
+                <span className="btn__play" aria-hidden="true">
+                  ▶
+                </span>
                 See how it works
               </Link>
             </div>
             <p className="hero__note">
               <span className="hero__noteDot" aria-hidden="true" />
-              Live for students at app.bitesite.in · Payments secured by Razorpay
+              Live at app.bitesite.in · Payments secured by Razorpay
             </p>
           </div>
 
-          <BreakClock />
+          <div className="hero__art">
+            <div className="hero__blob" aria-hidden="true" />
+            <img className="hero__dish" src="/food/food_ramen.png" alt="" aria-hidden="true" />
+          </div>
         </div>
+      </section>
+
+      {/* ── The break clock ── */}
+      <section className="clockStrip">
+        <Wave position="top" />
+        <div className="shell clockGrid">
+          <div>
+            <p className="eyebrow">The maths</p>
+            <h2>
+              Thirty minutes, and the queue takes <span className="say">half of it.</span>
+            </h2>
+            <p className="clock__caption">
+              Illustrative. Real queue times vary by campus and by hour.
+            </p>
+          </div>
+
+          <div className="clock reveal" data-reveal>
+            <div className="clock__row">
+              <div className="clock__label">
+                <span className="clock__labelWho">Without BiteSite</span>
+                <span>12 min to eat</span>
+              </div>
+              <div className="clock__bar">
+                <div className="clock__seg clock__seg--queue" style={{ ['--w' as string]: '60%' }}>
+                  18 min queueing
+                </div>
+                <div className="clock__seg clock__seg--eat" style={{ ['--w' as string]: '40%' }}>
+                  12 min
+                </div>
+              </div>
+            </div>
+
+            <div className="clock__row clock__row--after">
+              <div className="clock__label">
+                <span className="clock__labelWho">With BiteSite</span>
+                <span>28 min to eat</span>
+              </div>
+              <div className="clock__bar">
+                <div className="clock__seg clock__seg--pickup" style={{ ['--w' as string]: '7%' }}>
+                  2
+                </div>
+                <div className="clock__seg clock__seg--eat" style={{ ['--w' as string]: '93%' }}>
+                  28 min actually eating
+                </div>
+              </div>
+            </div>
+
+            <p className="clock__verdict">
+              <span className="clock__verdictNum">+16</span>
+              <span>minutes of your own break, handed back to you.</span>
+            </p>
+          </div>
+        </div>
+        <Wave position="bottom" />
       </section>
 
       {/* ── How it works ── */}
@@ -223,20 +252,21 @@ export default function Home() {
         <div className="shell">
           <div className="sectionHead sectionHead--wide reveal" data-reveal>
             <div>
-              <p className="eyebrow eyebrow--saffron">How it works</p>
-              <h2 className="sectionHead__title">Four steps, and none of them is standing in line.</h2>
+              <p className="eyebrow">How it works</p>
+              <h2>
+                Four steps, and none of them is <span className="say">standing in line.</span>
+              </h2>
             </div>
             <p className="sectionHead__lede">
-              The whole point is that the transaction is finished before you walk over. All that is
-              left at the counter is picking the food up.
+              The whole transaction finishes before you walk over. All that is left at the counter
+              is picking the food up.
             </p>
           </div>
 
           <ol className="steps reveal" data-reveal>
             {STEPS.map((s, i) => (
               <li className="step" key={s.title}>
-                <span className="step__n">{i + 1}</span>
-                <img className="step__art" src={s.art} alt="" aria-hidden="true" loading="lazy" />
+                <span className="step__n">{String(i + 1).padStart(2, '0')}</span>
                 <h3 className="step__title">{s.title}</h3>
                 <p className="step__body">{s.body}</p>
               </li>
@@ -245,14 +275,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── What's on the counter ── */}
+      {/* ── What the canteen makes ── */}
       <section className="menuBand" id="menu">
-        <div className="shell menuBand__head">
-          <p className="eyebrow eyebrow--onDark">On the counter</p>
-          <h2 className="menuBand__title">The food your canteen already makes.</h2>
-          <p className="menuBand__lede">
-            BiteSite does not change the menu — your canteen sets its own items, prices and
-            availability. It only changes how you get hold of them.
+        <div className="shell sectionHead sectionHead--center reveal" data-reveal>
+          <p className="eyebrow eyebrow--orange">On the counter</p>
+          <h2>
+            The food your canteen <span className="say">already makes.</span>
+          </h2>
+          <p className="sectionHead__lede">
+            BiteSite does not change the menu. Your canteen sets its own items, prices and
+            availability — this only changes how you get hold of them.
           </p>
         </div>
         <div className="marquee">
@@ -277,7 +309,9 @@ export default function Home() {
         <div className="shell">
           <div className="sectionHead reveal" data-reveal>
             <p className="eyebrow">Two sides of the counter</p>
-            <h2 className="sectionHead__title">Built for the students queueing and the staff serving.</h2>
+            <h2>
+              Built for the students queueing and the <span className="say">staff serving.</span>
+            </h2>
           </div>
 
           <div className="split reveal" data-reveal>
@@ -294,7 +328,7 @@ export default function Home() {
                 ].map((t) => (
                   <li key={t}>
                     <span className="panel__tick" aria-hidden="true">
-                      ✓
+                      —
                     </span>
                     {t}
                   </li>
@@ -318,28 +352,29 @@ export default function Home() {
                 ].map((t) => (
                   <li key={t}>
                     <span className="panel__tick" aria-hidden="true">
-                      ✓
+                      —
                     </span>
                     {t}
                   </li>
                 ))}
               </ul>
-              <Link className="btn btn--ghostOnDark panel__cta" to="/for-canteens">
+              <Link className="btn btn--onDark panel__cta" to="/for-canteens">
                 Bring BiteSite to your campus
               </Link>
-              <img className="panel__mascot" src="/mascot/bito-cooking.png" alt="" aria-hidden="true" />
             </article>
           </div>
         </div>
       </section>
 
-      {/* ── Trust and payments ── */}
-      <section className="section trust grain" id="trust">
+      {/* ── Payments and safety ── */}
+      <section className="section" id="trust">
         <div className="shell">
           <div className="sectionHead sectionHead--wide reveal" data-reveal>
             <div>
-              <p className="eyebrow eyebrow--moss">Payments and safety</p>
-              <h2 className="sectionHead__title">Money and data, handled carefully.</h2>
+              <p className="eyebrow">Payments and safety</p>
+              <h2>
+                Money and data, <span className="say">handled carefully.</span>
+              </h2>
             </div>
             <p className="sectionHead__lede">
               Prepayment only works if refunds work. Here is exactly how both are handled, and what
@@ -349,12 +384,15 @@ export default function Home() {
 
           <div className="trustGrid reveal" data-reveal>
             {TRUST.map((t) => (
-              <article className="trustCard" key={t.title}>
-                <div className="trustCard__icon" aria-hidden="true">
+              <article className="trustItem" key={t.title}>
+                <div
+                  className={`trustItem__icon${t.orange ? ' trustItem__icon--orange' : ''}`}
+                  aria-hidden="true"
+                >
                   {t.icon}
                 </div>
-                <h3 className="trustCard__title">{t.title}</h3>
-                <p className="trustCard__body">{t.body}</p>
+                <h3 className="trustItem__title">{t.title}</h3>
+                <p className="trustItem__body">{t.body}</p>
               </article>
             ))}
           </div>
@@ -366,7 +404,9 @@ export default function Home() {
         <div className="shell">
           <div className="sectionHead reveal" data-reveal>
             <p className="eyebrow">Questions</p>
-            <h2 className="sectionHead__title">The things people ask before their first order.</h2>
+            <h2>
+              The things people ask before their <span className="say">first order.</span>
+            </h2>
           </div>
           <div className="reveal" data-reveal>
             <Faq />
@@ -378,7 +418,9 @@ export default function Home() {
       <section className="section cta">
         <div className="shell cta__inner">
           <p className="eyebrow eyebrow--onDark">Ready when you are</p>
-          <h2 className="cta__title">Order now, eat sooner.</h2>
+          <h2 className="cta__title">
+            Order now, <span className="say">eat sooner.</span>
+          </h2>
           <p className="cta__lede">
             If your college is already on BiteSite, you can create an account and place your first
             order in a couple of minutes. If it is not, tell us and we will talk to your canteen.

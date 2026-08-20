@@ -57,8 +57,10 @@ export default function HowItWorks() {
 
       <header className="pageHero">
         <div className="shell pageHero__inner">
-          <p className="eyebrow eyebrow--saffron">How it works</p>
-          <h1 className="pageHero__title">From your desk to the counter, without the queue.</h1>
+          <p className="eyebrow eyebrow--orange">How it works</p>
+          <h1 className="pageHero__title">
+            From your desk to the counter, <span className="say">without the queue.</span>
+          </h1>
           <p className="pageHero__lede">
             The whole transaction — choosing, ordering, paying — happens before you walk over. All
             that is left at the counter is picking the food up.
@@ -91,7 +93,9 @@ export default function HowItWorks() {
       <section className="section cta">
         <div className="shell cta__inner">
           <p className="eyebrow eyebrow--onDark">Try it</p>
-          <h2 className="cta__title">Your canteen might already be on here.</h2>
+          <h2 className="cta__title">
+            Your canteen might <span className="say">already be on here.</span>
+          </h2>
           <p className="cta__lede">
             Create an account, pick your college, and see. If it is not listed yet, tell us and we
             will talk to them.

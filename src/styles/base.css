@@ -17,7 +17,7 @@ body {
   color: var(--ink);
   font-family: var(--font-body);
   font-size: var(--t-body);
-  line-height: 1.6;
+  line-height: 1.62;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -36,13 +36,11 @@ h2,
 h3,
 h4 {
   font-family: var(--font-display);
-  font-weight: 600;
-  line-height: 1.08;
-  letter-spacing: -0.015em;
+  font-weight: 800;
+  line-height: 1.06;
+  letter-spacing: -0.035em;
   text-wrap: balance;
   margin: 0;
-  /* Fraunces is variable: dial in a little softness and optical sizing. */
-  font-variation-settings: 'SOFT' 28, 'WONK' 1, 'opsz' 40;
 }
 
 h1 {
@@ -53,7 +51,21 @@ h2 {
 }
 h3 {
   font-size: var(--t-h3);
-  letter-spacing: -0.008em;
+  letter-spacing: -0.02em;
+}
+
+/*
+ * The one word per heading that carries the voice. Set in the serif italic, a size step
+ * larger to compensate for its lighter weight, and in the brand orange.
+ */
+.say {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--orange);
+  font-size: 1.12em;
+  line-height: 0.95;
 }
 
 p {
@@ -62,20 +74,20 @@ p {
 }
 
 a {
-  color: var(--terracotta-deep);
+  color: var(--orange-deep);
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
 }
 a:hover {
-  color: var(--terracotta);
+  color: var(--orange);
 }
 
 strong {
-  font-weight: 600;
+  font-weight: 700;
 }
 
 ::selection {
-  background: var(--terracotta);
+  background: var(--orange);
   color: var(--cream);
 }
 
@@ -85,46 +97,35 @@ strong {
   width: 100%;
   max-width: var(--shell);
   margin-inline: auto;
-  padding-inline: clamp(1.15rem, 0.6rem + 2.4vw, 2.5rem);
+  padding-inline: clamp(1.25rem, 0.6rem + 2.6vw, 3rem);
 }
 
 .section {
   padding-block: var(--section-y);
+  position: relative;
 }
 
 .measure {
   max-width: var(--measure);
 }
 
-/* ── Eyebrow ──────────────────────────────────────────────────── */
+/* ── Eyebrow: letterspaced text, not a pill ───────────────────── */
 
 .eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--gap-2xs);
-  font-family: var(--font-mark);
+  display: block;
+  font-family: var(--font-display);
   font-size: var(--t-fine);
   font-weight: 700;
-  letter-spacing: 0.11em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--terracotta-deep);
-  background: var(--terracotta-tint);
-  border-radius: var(--r-pill);
-  padding: 0.4rem 0.9rem;
-  margin: 0;
+  color: var(--forest);
+  margin: 0 0 var(--gap-sm);
 }
-
-.eyebrow--moss {
-  color: var(--moss);
-  background: var(--moss-tint);
-}
-.eyebrow--saffron {
-  color: #8a5f11;
-  background: var(--saffron-tint);
+.eyebrow--orange {
+  color: var(--orange-deep);
 }
 .eyebrow--onDark {
-  color: var(--clay-soft);
-  background: rgba(247, 201, 172, 0.14);
+  color: var(--sage-soft);
 }
 
 /* ── Buttons ──────────────────────────────────────────────────── */
@@ -134,45 +135,80 @@ strong {
   align-items: center;
   justify-content: center;
   gap: 0.55rem;
-  font-family: var(--font-body);
+  font-family: var(--font-display);
   font-size: var(--t-small);
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1;
-  padding: 0.95rem 1.6rem;
-  border-radius: var(--r-pill);
-  border: 1.5px solid transparent;
+  letter-spacing: -0.01em;
+  padding: 1.05rem 1.9rem;
+  border-radius: var(--r-sm);
+  border: none;
   cursor: pointer;
   text-decoration: none;
   white-space: nowrap;
   transition:
-    transform 0.22s var(--ease-out),
-    background-color 0.22s var(--ease-out),
-    border-color 0.22s var(--ease-out),
-    box-shadow 0.22s var(--ease-out),
-    color 0.22s var(--ease-out);
+    transform 0.25s var(--ease-out),
+    background-color 0.25s var(--ease-out),
+    box-shadow 0.25s var(--ease-out),
+    color 0.25s var(--ease-out);
 }
 
 .btn--primary {
-  background: var(--terracotta);
+  background: var(--forest);
   color: #fff;
-  box-shadow: var(--shadow-warm);
+  box-shadow: 0 14px 30px -16px rgba(58, 85, 64, 0.75);
 }
 .btn--primary:hover {
-  background: var(--terracotta-deep);
+  background: var(--forest-deep);
   color: #fff;
   transform: translateY(-2px);
-  box-shadow: 0 22px 50px -20px rgba(184, 69, 31, 0.6);
 }
 
-.btn--ghost {
-  background: transparent;
+.btn--orange {
+  background: var(--orange);
+  color: #fff;
+  box-shadow: var(--lift-warm);
+}
+.btn--orange:hover {
+  background: var(--orange-deep);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* Text-and-icon tertiary. No border, no fill — the reference's "see how it works". */
+.btn--plain {
+  background: none;
   color: var(--ink);
-  border-color: var(--rule-strong);
+  padding-inline: 0.35rem;
+  box-shadow: none;
+}
+.btn--plain:hover {
+  color: var(--orange-deep);
+}
+.btn__play {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--hairline);
+  font-size: 0.7rem;
+  transition: box-shadow 0.25s var(--ease-out), background-color 0.25s var(--ease-out);
+}
+.btn--plain:hover .btn__play {
+  background: var(--orange-wash);
+  box-shadow: inset 0 0 0 1.5px transparent;
+}
+
+/* Quiet secondary on a light ground — a wash, not an outline. */
+.btn--ghost {
+  background: var(--sage-wash);
+  color: var(--forest-deep);
 }
 .btn--ghost:hover {
-  background: var(--paper);
-  color: var(--ink);
-  border-color: var(--ink);
+  background: var(--sage-soft);
+  color: var(--forest-deep);
   transform: translateY(-2px);
 }
 
@@ -187,14 +223,12 @@ strong {
 }
 
 .btn--ghostOnDark {
-  background: transparent;
+  background: rgba(251, 246, 238, 0.09);
   color: var(--cream);
-  border-color: rgba(251, 248, 243, 0.32);
 }
 .btn--ghostOnDark:hover {
-  background: rgba(251, 248, 243, 0.1);
+  background: rgba(251, 246, 238, 0.17);
   color: #fff;
-  border-color: rgba(251, 248, 243, 0.6);
   transform: translateY(-2px);
 }
 
@@ -206,9 +240,9 @@ strong {
 /* ── Focus ────────────────────────────────────────────────────── */
 
 :where(a, button, input, textarea, select, [tabindex]):focus-visible {
-  outline: 2.5px solid var(--terracotta);
+  outline: 2.5px solid var(--orange);
   outline-offset: 3px;
-  border-radius: var(--r-xs);
+  border-radius: 4px;
 }
 
 .skip-link {
@@ -231,26 +265,36 @@ strong {
   color: var(--cream);
 }
 
-/* ── Grain: breaks the flatness of the large cream fields ─────── */
+/* ── Organic sage curve: the recurring shape, never a straight edge ── */
 
-.grain::after {
-  content: '';
+.wave {
   position: absolute;
-  inset: 0;
+  left: 0;
+  width: 100%;
+  line-height: 0;
   pointer-events: none;
-  opacity: 0.32;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
-  mix-blend-mode: multiply;
+  color: var(--sage-wash);
+}
+.wave svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.wave--top {
+  top: -1px;
+}
+.wave--bottom {
+  bottom: -1px;
 }
 
 /* ── Scroll reveal ────────────────────────────────────────────── */
 
 .reveal {
   opacity: 0;
-  transform: translateY(18px);
+  transform: translateY(20px);
   transition:
-    opacity 0.7s var(--ease-out),
-    transform 0.7s var(--ease-out);
+    opacity 0.75s var(--ease-out),
+    transform 0.75s var(--ease-out);
 }
 .reveal.is-in {
   opacity: 1;
