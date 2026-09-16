@@ -73,7 +73,7 @@ const sections: PolicySection[] = [
     id: 'not-collect',
     heading: 'What we never collect',
     body: (
-      <div className="callout callout--moss">
+      <div className="callout callout--plain">
         <p className="callout__title">Your payment credentials never reach us</p>
         <p>
           Card numbers, CVVs, UPI PINs, bank credentials and similar details are entered on

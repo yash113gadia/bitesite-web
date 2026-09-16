@@ -65,7 +65,7 @@ export default function ForCanteens() {
             paid orders you can work through, with the money already collected.
           </p>
           <div className="hero__actions">
-            <Link className="btn btn--orange" to="/contact">
+            <Link className="btn btn--red" to="/contact">
               Talk to us about your campus
             </Link>
             <a className="btn btn--ghost" href={portals.outlet}>

@@ -2,25 +2,30 @@
 
 /* ── Header ───────────────────────────────────────────────────── */
 
+/*
+ * Flat bone with a hard edge, as in the app. The old header was a translucent pane with a
+ * 16px backdrop blur — the single most soft-system thing on the site, and the first thing
+ * that gave it away against a product whose every surface has a drawn border.
+ */
 .nav {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(251, 246, 238, 0.86);
-  backdrop-filter: saturate(180%) blur(16px);
-  -webkit-backdrop-filter: saturate(180%) blur(16px);
-  transition: box-shadow 0.3s var(--ease-out), background-color 0.3s var(--ease-out);
+  background: var(--color-bg);
+  border-bottom: var(--border-w) solid var(--color-border);
+  transition: border-bottom-width 120ms ease;
 }
+/* Scrolled state says "this is floating over content now" by thickening its own edge,
+   which is the only depth cue this system has. */
 .nav.is-stuck {
-  background: rgba(251, 246, 238, 0.95);
-  box-shadow: 0 1px 0 var(--hairline);
+  border-bottom-width: var(--border-w-loud);
 }
 
 .nav__inner {
   display: flex;
   align-items: center;
   gap: var(--gap-md);
-  min-height: 82px;
+  min-height: 74px;
 }
 
 .nav__mark {
@@ -28,92 +33,107 @@
   align-items: center;
   gap: 0.6rem;
   font-family: var(--font-display);
-  font-size: 1.42rem;
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  color: var(--ink);
+  font-size: 1.35rem;
+  letter-spacing: -0.03em;
+  /* The wordmark is set the way the brand sets it — not uppercased like everything else. */
+  text-transform: none;
+  color: var(--color-ink);
   text-decoration: none;
   margin-right: auto;
 }
 .nav__mark:hover {
-  color: var(--ink);
+  color: var(--color-ink);
 }
+/* The mark carries its own red field, so it only needs the border to become a tile. */
 .nav__markIcon {
-  width: 34px;
-  height: 34px;
-  color: var(--orange);
+  width: 38px;
+  height: 38px;
+  border: var(--border-w) solid var(--color-border);
+  box-shadow: var(--shadow-xs);
   flex: none;
 }
 
 .nav__links {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.25rem;
 }
 
 .nav__link {
   position: relative;
-  font-size: var(--t-small);
-  font-weight: 500;
-  color: var(--ink-soft);
+  font-family: var(--font-display);
+  font-size: var(--t-fine);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
   text-decoration: none;
-  padding: 0.6rem 0.95rem;
-  transition: color 0.2s var(--ease-out);
+  padding: 0.55rem 0.8rem;
+  border: var(--border-w) solid transparent;
+  transition: color 120ms ease, background-color 120ms ease, border-color 120ms ease;
 }
 .nav__link:hover {
-  color: var(--ink);
+  color: var(--color-ink);
+  background: var(--color-surface-deep);
 }
-/* Current page marked by a dot beneath, as in the reference — no pill, no fill. */
+/* Current page is a yellow tile with a drawn edge — the same "selected" treatment the
+   app's category rail uses, rather than a dot floating under the label. */
 .nav__link[aria-current='page'] {
-  color: var(--ink);
-  font-weight: 600;
-}
-.nav__link[aria-current='page']::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  bottom: 0.1rem;
-  translate: -50% 0;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--orange);
+  color: var(--color-ink);
+  background: var(--color-accent-tint);
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-xs);
 }
 
 .nav__cta {
-  padding: 0.85rem 1.5rem;
+  padding: 0.8rem 1.25rem;
   margin-left: var(--gap-xs);
 }
 
 .nav__toggle {
   display: none;
-  width: 44px;
-  height: 44px;
-  border: none;
-  background: transparent;
+  width: 46px;
+  height: 46px;
+  background: var(--color-field);
+  border: var(--border-w) solid var(--color-border);
+  box-shadow: var(--shadow-xs);
   cursor: pointer;
   padding: 0;
   place-items: center;
+  transition: transform 110ms ease, box-shadow 110ms ease;
 }
+.nav__toggle:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 var(--color-ink);
+}
+/*
+ * All three bars share one grid cell, so they are concentric by default and the closed
+ * state is what pushes the outer two apart. The open state just drops that offset and
+ * rotates, which means the X closes exactly whatever the button's height works out to.
+ * Spacing the bars with margins instead and guessing the offset back does not: the three
+ * auto rows stretch to fill the 46px button, so the bars sat 8.8px apart while the
+ * transform assumed 6.5px, and the "X" came out as a chevron.
+ */
 .nav__toggleBar {
-  display: block;
+  grid-area: 1 / 1;
   width: 20px;
-  height: 2px;
-  background: var(--ink);
-  border-radius: 2px;
-  transition: transform 0.25s var(--ease-out), opacity 0.2s var(--ease-out);
+  height: 2.5px;
+  background: var(--color-ink);
+  transition: transform 0.18s ease, opacity 0.12s ease;
 }
-.nav__toggleBar + .nav__toggleBar {
-  margin-top: 5px;
+.nav__toggleBar:nth-child(1) {
+  transform: translateY(-6px);
+}
+.nav__toggleBar:nth-child(3) {
+  transform: translateY(6px);
 }
 .nav__toggle[aria-expanded='true'] .nav__toggleBar:nth-child(1) {
-  transform: translateY(7px) rotate(45deg);
+  transform: rotate(45deg);
 }
 .nav__toggle[aria-expanded='true'] .nav__toggleBar:nth-child(2) {
   opacity: 0;
 }
 .nav__toggle[aria-expanded='true'] .nav__toggleBar:nth-child(3) {
-  transform: translateY(-7px) rotate(-45deg);
+  transform: rotate(-45deg);
 }
 
 @media (max-width: 940px) {
@@ -122,28 +142,34 @@
   }
   .nav__links {
     position: fixed;
-    inset: 82px 0 auto;
+    inset: 74px 0 auto;
+    /* A short phone in landscape would otherwise run the sheet off the bottom with no
+       way to reach the last link. dvh, not vh, so the browser chrome is accounted for. */
+    max-height: calc(100dvh - 74px);
+    overflow-y: auto;
     flex-direction: column;
     align-items: stretch;
     gap: 0;
-    background: var(--cream);
-    padding: var(--gap-sm) clamp(1.25rem, 0.6rem + 2.6vw, 3rem) var(--gap-lg);
-    box-shadow: 0 20px 40px -24px rgba(43, 32, 24, 0.4);
-    animation: navDrop 0.24s var(--ease-out);
+    background: var(--color-bg);
+    border-bottom: var(--border-w-loud) solid var(--color-border);
+    padding: 0 clamp(1.25rem, 0.6rem + 2.6vw, 3rem) var(--gap-md);
   }
   .nav__links[data-open='false'] {
     display: none;
   }
   .nav__link {
-    padding: 0.95rem 0;
-    font-size: 1.1rem;
-    border-bottom: 1px solid var(--hairline);
+    padding: 1rem 0;
+    font-size: 1rem;
+    border: none;
+    border-bottom: var(--rule-w) solid var(--rule-color);
   }
-  .nav__link[aria-current='page']::after {
-    left: auto;
-    right: 0.2rem;
-    bottom: 50%;
-    translate: 0 50%;
+  .nav__link:hover {
+    background: none;
+  }
+  .nav__link[aria-current='page'] {
+    background: none;
+    box-shadow: none;
+    color: var(--color-primary-dark);
   }
   .nav__cta {
     margin: var(--gap-md) 0 0;
@@ -151,18 +177,48 @@
   }
 }
 
-@keyframes navDrop {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
+/*
+ * Touch targets.
+ *
+ * Two different bars on purpose. The footer's link columns and the contents rail are
+ * navigation — things people aim at — so they get the 44px the platform guidelines ask
+ * for. The merchant identity block and the contact details are metadata that happens to
+ * be tappable; they get the 24px WCAG 2.2 asks for as a minimum, because stretching six
+ * lines of legal text to 44px each turns the footer into another screen of scrolling.
+ */
+@media (pointer: coarse), (max-width: 640px) {
+  .nav__mark,
+  .footer__mark {
+    padding-block: 0.35rem;
+  }
+  .footer__list {
+    gap: 0;
+  }
+  .footer__list a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .footer__idValue a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
   }
 }
 
 /* ── Footer ───────────────────────────────────────────────────── */
 
+/*
+ * Bone, not the old near-black slab. The closing band above it is the page's one dark
+ * surface; a dark footer directly under a dark CTA merged the two into a single black
+ * half-screen. Keeping the footer on the canvas also puts the merchant identity block —
+ * legal name, address, grievance officer, the part a payment reviewer reads — at full
+ * ink-on-bone contrast instead of grey-on-black.
+ */
 .footer {
-  background: var(--umber);
-  color: #cabfb2;
+  background: var(--color-bg);
+  border-top: var(--border-w-loud) solid var(--color-border);
+  color: var(--color-ink);
   padding-block: var(--gap-2xl) var(--gap-lg);
   position: relative;
 }
@@ -188,34 +244,36 @@
   align-items: center;
   gap: 0.6rem;
   font-family: var(--font-display);
-  font-size: 1.42rem;
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  color: var(--cream);
+  font-size: 1.35rem;
+  letter-spacing: -0.03em;
+  text-transform: none;
+  color: var(--color-ink);
   text-decoration: none;
 }
 .footer__byline {
-  margin: 0.6rem 0 0;
-  font-family: var(--font-accent);
-  font-style: italic;
-  font-size: 1.05rem;
-  color: var(--sage-soft);
+  margin: 0.7rem 0 0;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-primary-dark);
 }
 .footer__blurb {
   margin-top: var(--gap-sm);
-  max-width: 32ch;
+  max-width: 34ch;
   font-size: var(--t-small);
-  color: #a1958a;
+  color: var(--color-ink-muted);
 }
 
 .footer__colTitle {
   font-family: var(--font-display);
   font-size: var(--t-fine);
-  font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--sage-soft);
+  color: var(--color-ink);
   margin: 0 0 var(--gap-sm);
+  padding-bottom: var(--gap-2xs);
+  border-bottom: var(--border-w) solid var(--color-border);
 }
 
 .footer__list {
@@ -224,74 +282,83 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.65rem;
+  gap: 0.6rem;
 }
 .footer__list a {
-  color: #cabfb2;
+  color: var(--color-ink);
+  font-weight: 400;
   font-size: var(--t-small);
   text-decoration: none;
-  transition: color 0.2s var(--ease-out);
+  transition: color 120ms ease;
 }
 .footer__list a:hover {
-  color: #fff;
+  color: var(--color-primary-dark);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
 }
 
 /* Business identity — what a payment reviewer looks for. */
 .footer__identity {
   padding-block: var(--gap-lg);
-  border-top: 1px solid rgba(202, 191, 178, 0.14);
+  border-top: var(--rule-w) solid var(--rule-color);
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
   gap: var(--gap-md);
 }
 .footer__idItem {
   font-size: var(--t-fine);
-  line-height: 1.7;
+  line-height: 1.65;
 }
 .footer__idLabel {
   display: block;
   font-family: var(--font-display);
-  font-weight: 700;
-  letter-spacing: 0.16em;
+  /* 12px floor, as with the clock labels. */
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #857a6e;
-  margin-bottom: 0.35rem;
+  color: var(--color-primary-dark);
+  margin-bottom: 0.3rem;
 }
 .footer__idValue {
-  color: #d5cabd;
+  color: var(--color-ink);
   font-style: normal;
 }
 .footer__idValue a {
-  color: #d5cabd;
+  color: var(--color-ink);
+  font-weight: 400;
   text-decoration: none;
 }
 .footer__idValue a:hover {
-  color: #fff;
+  color: var(--color-primary-dark);
 }
 
 .footer__bottom {
   padding-top: var(--gap-lg);
-  border-top: 1px solid rgba(202, 191, 178, 0.14);
+  border-top: var(--rule-w) solid var(--rule-color);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: var(--gap-sm);
   font-size: var(--t-fine);
-  color: #857a6e;
+  color: var(--color-ink-muted);
 }
 .footer__pay {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
   flex-wrap: wrap;
-  color: #a1958a;
+  color: var(--color-ink-muted);
 }
 
+/* The build-time reminder that business.ts still has empty fields. Loud on purpose. */
 .footer__setupNotice {
   margin-top: var(--gap-md);
-  padding: var(--gap-sm) 0 0;
-  color: var(--sage-soft);
+  padding: var(--gap-sm) var(--gap-md);
+  background: var(--color-accent-tint);
+  border: var(--border-w) solid var(--color-border);
+  box-shadow: var(--shadow-xs);
+  color: var(--color-ink);
   font-size: var(--t-fine);
   line-height: 1.6;
 }

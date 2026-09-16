@@ -26,7 +26,7 @@ const STEPS = [
 const TRUST = [
   {
     icon: '₹',
-    orange: true,
+    red: true,
     title: 'Paid before it is cooked',
     body: 'Every order is paid in full through Razorpay before it reaches the kitchen queue, so there are no unpaid orders and no arguments at the counter.',
   },
@@ -37,7 +37,7 @@ const TRUST = [
   },
   {
     icon: '↺',
-    orange: true,
+    red: true,
     title: 'Refunds are issued first',
     body: 'If a canteen has to cancel a paid order, the refund goes back to your original payment method before the cancellation is even recorded.',
   },
@@ -94,19 +94,21 @@ const FAQ = [
   },
 ];
 
-function Wave({ position }: { position: 'top' | 'bottom' }) {
+/**
+ * The red strip the student menu opens with, same phrase and all.
+ *
+ * Rendered four times because the track scrolls by half its own width — two passes have
+ * to fill the viewport for the loop to be seamless, and the whole thing is aria-hidden
+ * since it is a texture, not a sentence anyone needs read to them.
+ */
+function Ticker() {
   return (
-    <div className={`wave wave--${position}`} aria-hidden="true">
-      <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <path
-          d={
-            position === 'top'
-              ? 'M0,64 C240,10 480,110 720,74 C960,38 1200,0 1440,40 L1440,0 L0,0 Z'
-              : 'M0,56 C240,110 480,6 720,42 C960,78 1200,120 1440,72 L1440,120 L0,120 Z'
-          }
-          fill="currentColor"
-        />
-      </svg>
+    <div className="ticker" aria-hidden="true">
+      <div className="ticker__track">
+        {[0, 1, 2, 3].map((i) => (
+          <span key={i}>FRESH&nbsp;·&nbsp;FAST&nbsp;·&nbsp;FIERCE&nbsp;·&nbsp;</span>
+        ))}
+      </div>
     </div>
   );
 }
@@ -128,9 +130,7 @@ function Faq() {
                 onClick={() => setOpen(isOpen ? null : i)}
               >
                 {item.q}
-                <span className="faq__sign" aria-hidden="true">
-                  +
-                </span>
+                <span className="faq__sign" aria-hidden="true" />
               </button>
             </h3>
             <div className="faq__a" id={`faq-a-${i}`} data-open={isOpen} role="region">
@@ -160,7 +160,7 @@ export default function Home() {
       <section className="hero">
         <div className="shell hero__inner">
           <div>
-            <p className="eyebrow eyebrow--orange">College canteen, ordered ahead</p>
+            <p className="eyebrow eyebrow--red">College canteen, ordered ahead</p>
             <h1 className="hero__title">
               Skip the queue.
               <span className="say">Keep your break.</span>
@@ -170,7 +170,7 @@ export default function Home() {
               at the counter the moment it is ready.
             </p>
             <div className="hero__actions">
-              <a className="btn btn--orange" href={portals.app}>
+              <a className="btn btn--red" href={portals.app}>
                 Start ordering
               </a>
               <Link className="btn btn--plain" to="/how-it-works">
@@ -187,15 +187,20 @@ export default function Home() {
           </div>
 
           <div className="hero__art">
-            <div className="hero__blob" aria-hidden="true" />
+            <span className="sticker hero__sticker" aria-hidden="true">
+              Bite
+              <br />
+              Site
+            </span>
             <img className="hero__dish" src="/food/food_ramen.png" alt="" aria-hidden="true" />
           </div>
         </div>
       </section>
 
+      <Ticker />
+
       {/* ── The break clock ── */}
       <section className="clockStrip">
-        <Wave position="top" />
         <div className="shell clockGrid">
           <div>
             <p className="eyebrow">The maths</p>
@@ -244,7 +249,6 @@ export default function Home() {
             </p>
           </div>
         </div>
-        <Wave position="bottom" />
       </section>
 
       {/* ── How it works ── */}
@@ -278,7 +282,7 @@ export default function Home() {
       {/* ── What the canteen makes ── */}
       <section className="menuBand" id="menu">
         <div className="shell sectionHead sectionHead--center reveal" data-reveal>
-          <p className="eyebrow eyebrow--orange">On the counter</p>
+          <p className="eyebrow eyebrow--red">On the counter</p>
           <h2>
             The food your canteen <span className="say">already makes.</span>
           </h2>
@@ -386,7 +390,7 @@ export default function Home() {
             {TRUST.map((t) => (
               <article className="trustItem" key={t.title}>
                 <div
-                  className={`trustItem__icon${t.orange ? ' trustItem__icon--orange' : ''}`}
+                  className={`trustItem__icon${t.red ? ' trustItem__icon--red' : ''}`}
                   aria-hidden="true"
                 >
                   {t.icon}

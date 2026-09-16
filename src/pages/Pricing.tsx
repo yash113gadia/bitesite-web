@@ -53,7 +53,7 @@ export default function Pricing() {
                   </li>
                 ))}
               </ul>
-              <a className="btn btn--orange priceCard__cta" href={portals.app}>
+              <a className="btn btn--red priceCard__cta" href={portals.app}>
                 Start ordering
               </a>
             </article>

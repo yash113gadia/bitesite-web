@@ -30,7 +30,7 @@ export default function NotFound() {
             reachable from the homepage.
           </p>
           <div className="cta__actions" style={{ justifyContent: 'center' }}>
-            <Link className="btn btn--orange" to="/">
+            <Link className="btn btn--red" to="/">
               Back to the homepage
             </Link>
             <a className="btn btn--ghost" href={portals.app}>

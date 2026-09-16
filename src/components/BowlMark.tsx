@@ -1,41 +1,24 @@
 /**
- * The wordmark's icon: a bowl with steam.
+ * The brand mark: the app's own icon artwork.
  *
- * A placeholder for the real logo, but a deliberate one — a bowl says what BiteSite is,
- * where an initial in a rounded square says nothing. Swap the paths when the logo lands;
- * nothing else needs to change.
+ * This used to be a hand-drawn bowl SVG, described in its own comment as "a placeholder,
+ * but a deliberate one". The real mark has existed for a while — the red tile with the
+ * bone B and the yellow bowl in its counter — and it is what ships on both Android apps,
+ * the PWA icon set and every signed-in screen. The site is the only place that was still
+ * showing something else.
+ *
+ * Kept as a component rather than an inline <img> so the two call sites (header, footer)
+ * stay unchanged, and so there is still one place to swap if the artwork is reissued.
  */
 export default function BowlMark({ className }: { className?: string }) {
   return (
-    <svg
+    <img
       className={className}
-      viewBox="0 0 40 40"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
+      src="/brand/logo-mark.png"
+      width={38}
+      height={38}
+      alt=""
       aria-hidden="true"
-      focusable="false"
-    >
-      {/* steam */}
-      <path
-        d="M14.5 10.5c0-2 2-2.2 2-4.2M20 9.5c0-2.4 2.2-2.6 2.2-5M25.5 10.5c0-1.8 1.8-2 1.8-3.8"
-        stroke="currentColor"
-        strokeWidth="2.4"
-        strokeLinecap="round"
-      />
-      {/* bowl */}
-      <path
-        d="M5 18.5h30c0 8-6.7 14.5-15 14.5S5 26.5 5 18.5Z"
-        stroke="currentColor"
-        strokeWidth="2.8"
-        strokeLinejoin="round"
-      />
-      {/* handle */}
-      <path
-        d="M35 21.5c2.2 0 3.8 1.3 3.8 3.1 0 1.8-1.6 3.1-3.8 3.1"
-        stroke="currentColor"
-        strokeWidth="2.4"
-        strokeLinecap="round"
-      />
-    </svg>
+    />
   );
 }

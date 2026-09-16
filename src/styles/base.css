@@ -1,4 +1,59 @@
-/* Reset, typography, and the primitives shared by every page. */
+/*
+ * Reset, typography, and the primitives shared by every page.
+ *
+ * The component recipes here are the product's, ported: a surface is a bone rectangle
+ * with a near-black border and a hard offset shadow, a control is the same thing that
+ * moves into its own shadow when pressed, and anything that carries weight is set in
+ * Archivo Black, uppercase. Nothing is rounded, nothing is blurred, nothing fades.
+ */
+
+/*
+ * Self-hosted, copied byte-for-byte from what the app serves (static/fonts), including
+ * Google's own unicode-range split — so the browser still fetches the latin-ext file only
+ * when an accented character actually appears. Self-hosting also removes two DNS + TLS
+ * round trips to fonts.googleapis.com and fonts.gstatic.com from first paint, which is
+ * the same reason the product stopped using the CDN.
+ */
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/archivo-400-700-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+    U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0,
+    U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/archivo-400-700-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Archivo Black';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/archivo-black-400-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+    U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0,
+    U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Archivo Black';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/archivo-black-400-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
 
 *,
 *::before,
@@ -13,11 +68,11 @@ html {
 
 body {
   margin: 0;
-  background: var(--cream);
-  color: var(--ink);
+  background: var(--color-bg);
+  color: var(--color-ink);
   font-family: var(--font-body);
   font-size: var(--t-body);
-  line-height: 1.62;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -36,36 +91,39 @@ h2,
 h3,
 h4 {
   font-family: var(--font-display);
-  font-weight: 800;
-  line-height: 1.06;
-  letter-spacing: -0.035em;
+  font-weight: 400; /* Archivo Black is a single weight; asking for 800 synthesises it. */
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
   text-wrap: balance;
   margin: 0;
 }
 
 h1 {
   font-size: var(--t-h1);
+  letter-spacing: -0.03em;
 }
 h2 {
   font-size: var(--t-h2);
+  letter-spacing: -0.025em;
 }
 h3 {
   font-size: var(--t-h3);
-  letter-spacing: -0.02em;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
 }
 
 /*
- * The one word per heading that carries the voice. Set in the serif italic, a size step
- * larger to compensate for its lighter weight, and in the brand orange.
+ * The one phrase per heading that carries the voice.
+ *
+ * This used to be a serif italic in orange — the old site's whole personality in one
+ * class. In this system the emphasis colour is the brand red, exactly as the app's hero
+ * sets its "what are you craving today?" line. It only ever appears inside a heading, so
+ * it is always large text: red on bone measures 3.7:1, which clears the 3:1 that large
+ * text is held to but would not clear 4.5:1 at body size. Do not reuse it in a paragraph.
  */
 .say {
-  font-family: var(--font-accent);
-  font-style: italic;
-  font-weight: 400;
-  letter-spacing: -0.01em;
-  color: var(--orange);
-  font-size: 1.12em;
-  line-height: 0.95;
+  color: var(--color-primary);
 }
 
 p {
@@ -73,13 +131,22 @@ p {
   text-wrap: pretty;
 }
 
+/*
+ * Red comes in two values and they are not interchangeable. #e8281e is a FILL — buttons,
+ * the ticker, a segment of a bar — where it is read as a shape. #b81f16 is the same red
+ * darkened for TEXT: on the bone canvas it measures 5.4:1 where the fill red measures
+ * 3.7:1 and fails at body size. The product draws exactly this line (09-console.css sets
+ * --bs-link-color to the dark one and keeps the bright one for --color-primary), so any
+ * small red text here — links, labels, eyebrow captions — uses the dark one too.
+ */
 a {
-  color: var(--orange-deep);
-  text-decoration-thickness: 1px;
+  color: var(--color-primary-dark);
+  font-weight: 700;
+  text-decoration-thickness: 2px;
   text-underline-offset: 3px;
 }
 a:hover {
-  color: var(--orange);
+  color: var(--color-primary);
 }
 
 strong {
@@ -87,8 +154,8 @@ strong {
 }
 
 ::selection {
-  background: var(--orange);
-  color: var(--cream);
+  background: var(--color-accent-tint);
+  color: var(--color-ink);
 }
 
 /* ── Shell ────────────────────────────────────────────────────── */
@@ -109,27 +176,38 @@ strong {
   max-width: var(--measure);
 }
 
-/* ── Eyebrow: letterspaced text, not a pill ───────────────────── */
+/* ── Eyebrow: the app's kicker chip — a bordered yellow tag ───── */
 
 .eyebrow {
-  display: block;
+  display: inline-block;
   font-family: var(--font-display);
   font-size: var(--t-fine);
-  font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--forest);
-  margin: 0 0 var(--gap-sm);
+  color: var(--color-ink);
+  background: var(--color-accent-tint);
+  border: var(--border-w) solid var(--color-border);
+  box-shadow: var(--shadow-xs);
+  padding: 0.4rem 0.8rem;
+  margin: 0 0 var(--gap-md);
 }
-.eyebrow--orange {
-  color: var(--orange-deep);
+.eyebrow--red {
+  background: var(--color-primary);
+  color: #fff;
 }
+/* On the dark bands the ink border disappears, so the chip carries its own edge. */
 .eyebrow--onDark {
-  color: var(--sage-soft);
+  box-shadow: 2px 2px 0 var(--color-primary);
 }
 
 /* ── Buttons ──────────────────────────────────────────────────── */
 
+/*
+ * One recipe, four fills. The press is the app's: the control travels the length of its
+ * own shadow, so the shadow shortens to nothing rather than the button sliding out from
+ * under a shadow that stays put. It fires on :active, which is the only one of these
+ * states a touch device ever reaches.
+ */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -137,164 +215,230 @@ strong {
   gap: 0.55rem;
   font-family: var(--font-display);
   font-size: var(--t-small);
-  font-weight: 700;
   line-height: 1;
-  letter-spacing: -0.01em;
-  padding: 1.05rem 1.9rem;
-  border-radius: var(--r-sm);
-  border: none;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  padding: 1rem 1.6rem;
+  border: var(--border-w) solid var(--color-border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
   cursor: pointer;
   text-decoration: none;
-  white-space: nowrap;
+  /*
+   * Labels wrap. They used to be `white-space: nowrap`, which on a 320px screen made
+   * "Bring BiteSite to your campus" a 408px button — it pushed the document 88px wider
+   * than the viewport and body's overflow-x:hidden then quietly clipped the right-hand
+   * end off. A two-line button is fine; a clipped one is not.
+   */
+  text-align: center;
+  text-wrap: balance;
+  min-height: 48px;
+  max-width: 100%;
   transition:
-    transform 0.25s var(--ease-out),
-    background-color 0.25s var(--ease-out),
-    box-shadow 0.25s var(--ease-out),
-    color 0.25s var(--ease-out);
+    transform 110ms ease,
+    box-shadow 110ms ease,
+    background-color 110ms ease,
+    color 110ms ease;
+}
+.btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--color-ink);
+}
+.btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 var(--color-ink);
 }
 
-.btn--primary {
-  background: var(--forest);
+.btn--red {
+  background: var(--color-primary);
   color: #fff;
-  box-shadow: 0 14px 30px -16px rgba(58, 85, 64, 0.75);
+  border-width: var(--border-w-loud);
 }
-.btn--primary:hover {
-  background: var(--forest-deep);
+.btn--red:hover {
+  background: var(--color-primary-dark);
   color: #fff;
-  transform: translateY(-2px);
-}
-
-.btn--orange {
-  background: var(--orange);
-  color: #fff;
-  box-shadow: var(--lift-warm);
-}
-.btn--orange:hover {
-  background: var(--orange-deep);
-  color: #fff;
-  transform: translateY(-2px);
 }
 
-/* Text-and-icon tertiary. No border, no fill — the reference's "see how it works". */
+/* Quiet secondary: the yellow accent, same hardware. */
+.btn--ghost {
+  background: var(--color-accent-tint);
+  color: var(--color-ink);
+}
+.btn--ghost:hover {
+  background: var(--color-accent-deep);
+  color: var(--color-ink);
+}
+
+/* Text-and-icon tertiary. No fill, no shadow — but still a hard edge on the glyph. */
 .btn--plain {
   background: none;
-  color: var(--ink);
-  padding-inline: 0.35rem;
+  color: var(--color-ink);
+  border-color: transparent;
   box-shadow: none;
+  padding-inline: 0.25rem;
 }
 .btn--plain:hover {
-  color: var(--orange-deep);
+  color: var(--color-primary);
+  transform: none;
+  box-shadow: none;
 }
+.btn--plain:active {
+  transform: none;
+  box-shadow: none;
+}
+/* A start button, because that is what it is. */
 .btn__play {
   display: grid;
   place-items: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: transparent;
-  box-shadow: inset 0 0 0 1.5px var(--hairline);
+  width: 38px;
+  height: 38px;
+  background: var(--color-accent-tint);
+  border: var(--border-w) solid var(--color-border);
+  box-shadow: var(--shadow-xs);
   font-size: 0.7rem;
-  transition: box-shadow 0.25s var(--ease-out), background-color 0.25s var(--ease-out);
+  color: var(--color-ink);
+  transition: background-color 110ms ease;
 }
 .btn--plain:hover .btn__play {
-  background: var(--orange-wash);
-  box-shadow: inset 0 0 0 1.5px transparent;
+  background: var(--color-primary);
+  color: #fff;
 }
 
-/* Quiet secondary on a light ground — a wash, not an outline. */
-.btn--ghost {
-  background: var(--sage-wash);
-  color: var(--forest-deep);
-}
-.btn--ghost:hover {
-  background: var(--sage-soft);
-  color: var(--forest-deep);
-  transform: translateY(-2px);
-}
-
+/* On the two ink grounds the border would vanish, so bone carries the edge instead. */
 .btn--onDark {
-  background: var(--cream);
-  color: var(--ink);
+  background: var(--color-accent-tint);
+  color: var(--color-ink);
+  border-color: var(--color-ink);
+  box-shadow: 3px 3px 0 var(--color-bg);
 }
 .btn--onDark:hover {
-  background: #fff;
-  color: var(--ink);
-  transform: translateY(-2px);
+  background: var(--color-accent-deep);
+  color: var(--color-ink);
+  box-shadow: 4px 4px 0 var(--color-bg);
+}
+.btn--onDark:active {
+  box-shadow: 0 0 0 var(--color-bg);
 }
 
 .btn--ghostOnDark {
-  background: rgba(251, 246, 238, 0.09);
-  color: var(--cream);
+  background: transparent;
+  color: var(--color-bg);
+  border-color: var(--color-bg);
+  box-shadow: 3px 3px 0 var(--color-primary);
 }
 .btn--ghostOnDark:hover {
-  background: rgba(251, 246, 238, 0.17);
-  color: #fff;
-  transform: translateY(-2px);
+  background: var(--color-bg);
+  color: var(--color-ink);
+  box-shadow: 4px 4px 0 var(--color-primary);
 }
-
-/* Press feedback — must also fire on touch, where :hover never does. */
-.btn:active {
-  transform: translateY(0) scale(0.985);
+.btn--ghostOnDark:active {
+  box-shadow: 0 0 0 var(--color-primary);
 }
 
 /* ── Focus ────────────────────────────────────────────────────── */
 
+/* The app's two-ring treatment: a yellow halo that separates the control from the page,
+   and a thin ink edge outside it that keeps the contrast ratio on a yellow surface. */
 :where(a, button, input, textarea, select, [tabindex]):focus-visible {
-  outline: 2.5px solid var(--orange);
-  outline-offset: 3px;
-  border-radius: 4px;
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: 0;
 }
 
 .skip-link {
   position: absolute;
   left: 50%;
   top: 0;
-  translate: -50% -120%;
+  translate: -50% -140%;
   z-index: 200;
-  background: var(--ink);
-  color: var(--cream);
+  background: var(--color-primary);
+  color: #fff;
+  border: var(--border-w) solid var(--color-border);
+  border-top: none;
   padding: 0.75rem 1.25rem;
-  border-radius: 0 0 var(--r-sm) var(--r-sm);
+  font-family: var(--font-display);
   font-size: var(--t-small);
-  font-weight: 600;
+  text-transform: uppercase;
   text-decoration: none;
-  transition: translate 0.2s var(--ease-out);
+  transition: translate 0.15s ease;
 }
 .skip-link:focus-visible {
   translate: -50% 0;
-  color: var(--cream);
+  color: #fff;
 }
 
-/* ── Organic sage curve: the recurring shape, never a straight edge ── */
+/* ── Ticker: the app's energy strip, ported verbatim in spirit ── */
 
-.wave {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  line-height: 0;
-  pointer-events: none;
-  color: var(--sage-wash);
+/*
+ * A red band bounded top and bottom by the structural rule, scrolling uppercase display
+ * type. The student menu opens with one directly under its hero; this site uses it the
+ * same way — as the seam between two sections, never as decoration inside one.
+ */
+.ticker {
+  background: var(--color-primary);
+  border-top: var(--border-w) solid var(--color-border);
+  border-bottom: var(--border-w) solid var(--color-border);
+  overflow: hidden;
 }
-.wave svg {
-  width: 100%;
-  height: auto;
-  display: block;
+.ticker__track {
+  display: flex;
+  white-space: nowrap;
+  animation: tickerScroll 22s linear infinite;
 }
-.wave--top {
-  top: -1px;
+.ticker__track span {
+  /* Stated rather than inherited: a universal `text-wrap` shorthand elsewhere resets
+     wrapping mode on every element and would otherwise break the strip onto three
+     lines. The app hit exactly this and left a note about it in its token file. */
+  white-space: nowrap;
+  flex: none;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  color: #fff;
+  padding: 0.6rem 0;
 }
-.wave--bottom {
-  bottom: -1px;
+@keyframes tickerScroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ── Sticker: the rotated yellow disc from the menu hero ──────── */
+
+.sticker {
+  display: grid;
+  place-items: center;
+  text-align: center;
+  width: clamp(88px, 13vw, 132px);
+  height: clamp(88px, 13vw, 132px);
+  border-radius: 50%;
+  background: var(--color-accent-tint);
+  border: var(--border-w-loud) solid var(--color-border);
+  box-shadow: var(--shadow-md);
+  transform: rotate(8deg);
+  font-family: var(--font-display);
+  font-size: clamp(0.85rem, 2.2vw, 1.1rem);
+  line-height: 1.05;
+  text-transform: uppercase;
+  color: var(--color-ink);
 }
 
 /* ── Scroll reveal ────────────────────────────────────────────── */
 
+/*
+ * Stepped, not eased. A 750ms fade-and-glide is the vocabulary of the soft system this
+ * replaced; here the block arrives in three frames, which is the one place the arcade
+ * reference earns its keep without turning the page into a toy.
+ */
 .reveal {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(14px);
   transition:
-    opacity 0.75s var(--ease-out),
-    transform 0.75s var(--ease-out);
+    opacity 0.24s var(--step),
+    transform 0.24s var(--step);
 }
 .reveal.is-in {
   opacity: 1;

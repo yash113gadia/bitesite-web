@@ -54,7 +54,7 @@ export default function Nav() {
             </NavLink>
           ))}
           {/* www is the marketing site only — the product itself lives on app. */}
-          <a className="btn btn--orange nav__cta" href={portals.app} onClick={close}>
+          <a className="btn btn--red nav__cta" href={portals.app} onClick={close}>
             Open BiteSite
           </a>
         </nav>

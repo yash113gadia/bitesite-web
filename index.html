@@ -3,7 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#FBF8F3" />
+    <!-- The bone canvas, so a mobile browser's chrome continues the page instead of
+         capping it with a band of another colour. Matches the apps. -->
+    <meta name="theme-color" content="#f2ead9" />
 
     <title>BiteSite — order ahead from your college canteen</title>
     <meta
@@ -11,17 +13,30 @@
       content="BiteSite lets students order from their college canteen ahead of time, pay online, and collect at the counter without queueing."
     />
 
-    <link
-      rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%23D9572C'/%3E%3Ctext x='50' y='72' font-size='62' font-family='Georgia,serif' font-weight='bold' fill='%23FBF8F3' text-anchor='middle'%3EB%3C/text%3E%3C/svg%3E"
-    />
+    <!-- The real mark, the same file the apps and the PWA ship. -->
+    <link rel="icon" type="image/png" href="/brand/logo-mark.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Archivo is self-hosted (see @font-face in src/styles/base.css), so there is
+         nothing left to preconnect to. Only the two `latin` faces are preloaded: the
+         latin-ext files are behind a unicode-range and are fetched only when an accented
+         character actually appears, so preloading them would download bytes most visits
+         never use. `crossorigin` is required even same-origin — fonts are fetched in CORS
+         mode, and a preload whose mode does not match the real request is downloaded
+         twice rather than reused. -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+      href="/fonts/archivo-400-700-latin.woff2"
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+      href="/fonts/archivo-black-400-latin.woff2"
     />
   </head>
   <body>

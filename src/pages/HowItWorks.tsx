@@ -57,7 +57,7 @@ export default function HowItWorks() {
 
       <header className="pageHero">
         <div className="shell pageHero__inner">
-          <p className="eyebrow eyebrow--orange">How it works</p>
+          <p className="eyebrow eyebrow--red">How it works</p>
           <h1 className="pageHero__title">
             From your desk to the counter, <span className="say">without the queue.</span>
           </h1>

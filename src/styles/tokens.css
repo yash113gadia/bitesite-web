@@ -1,79 +1,95 @@
 /*
- * Design tokens.
+ * Design tokens — the BIG BEEF system, the same one the apps run.
  *
- * Type is a bold geometric sans carrying the structure, with a high-contrast serif italic
- * used only for the one word per heading that turns a statement into a voice. Nothing is
- * boxed: the palette does the separating, so surfaces are washes and curves rather than
- * bordered cards.
+ * Ported from the product's own `01-tokens.css` (src/main/resources/static/css/parts in
+ * the java project). Names are kept identical to that file on purpose: when someone puts
+ * this site next to the student app and asks why a red is off, the answer is one grep in
+ * two files rather than a translation table.
  *
- * One warm light world, painted explicitly — the cream ground is the brand.
+ * Bone canvas, near-black ink, red as the only action colour, yellow as the only accent.
+ * Square corners, hard offset shadows with no blur, Archivo Black uppercase for anything
+ * that carries weight.
  */
 
 :root {
-  /* ── Ground and ink ─────────────────────────────────────────── */
-  --cream: #fbf6ee;
-  --cream-deep: #f6eee1;
-  --cream-warm: #fdf9f3;
-  --paper: #ffffff;
-  --ink: #2b2018;
-  --ink-soft: #574a3f;
-  --ink-muted: #7d7064;
-  --ink-faint: #a89c90;
-  --hairline: rgba(43, 32, 24, 0.09);
+  /* ── Surfaces. Warm bone canvas, bone cards. ─────────────────── */
+  --color-bg: #f2ead9;
+  --color-field: #fffdf6;
+  --color-surface-deep: #e6dcc4;
 
-  /* ── Brand ──────────────────────────────────────────────────── */
-  --orange: #e0692a;
-  --orange-deep: #c2551d;
-  --orange-soft: #f6d9c4;
-  --orange-wash: #fbeade;
+  --color-ink: #14100d;
+  --color-ink-muted: #5c5247;
+  --color-border: #14100d;
 
-  /* Sage carries every organic shape — the counterweight to the orange. */
-  --sage: #a9bca1;
-  --sage-soft: #c9d8c2;
-  --sage-wash: #e8efe3;
-  --forest: #4a6b4f;
-  --forest-deep: #3a5540;
+  /* Muted copy on the one dark ground, the closing band. */
+  --color-ink-inverse-muted: #a89c8a;
 
-  --umber: #251c15;
+  /* ── Red is the primary action colour. ───────────────────────── */
+  --color-primary: #e8281e;
+  --color-primary-dark: #b81f16;
 
-  /* ── Type ───────────────────────────────────────────────────── */
-  --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-accent: 'Instrument Serif', 'Iowan Old Style', Georgia, serif;
-  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  /* ── Yellow accents. ─────────────────────────────────────────── */
+  --color-accent-tint: #ffc918;
+  --color-accent-deep: #ffb300;
 
-  --t-hero: clamp(2.9rem, 1.5rem + 5.4vw, 5.75rem);
-  --t-h1: clamp(2.2rem, 1.4rem + 3.1vw, 3.6rem);
-  --t-h2: clamp(1.85rem, 1.3rem + 2.1vw, 2.85rem);
-  --t-h3: clamp(1.2rem, 1.08rem + 0.6vw, 1.45rem);
-  --t-lede: clamp(1.05rem, 0.99rem + 0.34vw, 1.22rem);
+  /* ── Shape. Brutalist: no radii worth the name. ──────────────── */
+  --radius-sm: 0px;
+
+  /*
+   * Line weight.
+   *
+   * The product runs 1.5px structural borders because a console screen stacks a table
+   * inside a panel inside a card, and at 3px those edges merge into one black slab. This
+   * site has the opposite problem: five or six big surfaces on a page, each with room
+   * around it, where 1.5px reads as a hairline and the whole thing goes soft. So the
+   * marketing site sits at the loud end of the same scale. Same shapes, same palette,
+   * same type — heavier line, because there is less of it.
+   */
+  --border-w: 2px;
+  --border-w-loud: 3px;
+  --rule-w: 1.5px;
+  --rule-color: rgba(20, 16, 13, 0.16);
+
+  /* ── Depth. Hard offset, no blur, solid ink. ─────────────────── */
+  --shadow-xs: 2px 2px 0 var(--color-ink);
+  --shadow-sm: 3px 3px 0 var(--color-ink);
+  --shadow-md: 5px 5px 0 var(--color-ink);
+  --shadow-lg: 8px 8px 0 var(--color-ink);
+
+  /* ── Focus. Yellow halo plus an ink edge, as in the app. ─────── */
+  --focus-ring: 0 0 0 3px var(--color-accent-tint), 0 0 0 5px var(--color-ink);
+
+  /* ── Type. Archivo Black displays, Archivo carries copy. ─────── */
+  --font-display: 'Archivo Black', 'Archivo', system-ui, sans-serif;
+  --font-body: 'Archivo', system-ui, -apple-system, sans-serif;
+
+  --t-hero: clamp(2.75rem, 1.2rem + 6vw, 5.5rem);
+  --t-h1: clamp(2.1rem, 1.3rem + 3.2vw, 3.5rem);
+  --t-h2: clamp(1.75rem, 1.2rem + 2.2vw, 2.75rem);
+  --t-h3: clamp(1.15rem, 1.02rem + 0.62vw, 1.4rem);
+  --t-lede: clamp(1.02rem, 0.97rem + 0.3vw, 1.18rem);
   --t-body: 1.0625rem;
   --t-small: 0.9375rem;
   --t-fine: 0.8125rem;
 
-  /* ── Space ──────────────────────────────────────────────────── */
+  /* ── Space ───────────────────────────────────────────────────── */
   --gap-2xs: 0.375rem;
   --gap-xs: 0.625rem;
   --gap-sm: 1rem;
   --gap-md: 1.5rem;
   --gap-lg: 2.5rem;
   --gap-xl: 4rem;
-  --gap-2xl: 6.5rem;
-  --section-y: clamp(4.5rem, 3rem + 7vw, 9rem);
+  --gap-2xl: 6rem;
+  --section-y: clamp(4rem, 2.75rem + 6vw, 8rem);
 
   --shell: 1240px;
-  --measure: 60ch;
+  --measure: 62ch;
 
-  --r-sm: 12px;
-  --r-md: 20px;
-  --r-lg: 28px;
-  --r-pill: 999px;
-
-  /* Shadows are warm and diffuse — depth without an outline. */
-  --lift-sm: 0 10px 24px -16px rgba(43, 32, 24, 0.4);
-  --lift-md: 0 24px 50px -28px rgba(43, 32, 24, 0.42);
-  --lift-lg: 0 40px 80px -40px rgba(43, 32, 24, 0.45);
-  --lift-warm: 0 18px 40px -18px rgba(194, 85, 29, 0.42);
-
+  /*
+   * Motion. The app's transitions are short and linear-ish — nothing eases in over most
+   * of a second. `--step` exists for the two places that deliberately move in frames
+   * rather than smoothly, which is where the arcade in this system actually lives.
+   */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+  --step: steps(3, end);
 }
