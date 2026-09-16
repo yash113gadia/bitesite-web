@@ -192,7 +192,16 @@ export default function Home() {
               <br />
               Site
             </span>
-            <img className="hero__dish" src="/food/food_ramen.png" alt="" aria-hidden="true" />
+            {/* Width/height are stated so the panel reserves its square before the image
+                lands, rather than collapsing and shoving the page down on load. */}
+            <img
+              className="hero__dish"
+              src="/brand/hero-burger.png"
+              width={900}
+              height={900}
+              alt=""
+              aria-hidden="true"
+            />
           </div>
         </div>
       </section>

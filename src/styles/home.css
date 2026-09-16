@@ -81,14 +81,21 @@
   flex: none;
 }
 
-/* The dish sits on a yellow panel with a hard edge — the app's welcome band, framed. */
+/*
+ * The hero art panel.
+ *
+ * The supplied artwork is a finished square composition — a pixel burger centred on its
+ * own yellow field — so it fills the frame rather than floating inside it with padding.
+ * The frame itself (hard border, offset shadow, the sticker on the corner) is unchanged.
+ *
+ * The fallback colour is the artwork's own #fdce0e and deliberately NOT the brand
+ * --color-accent-tint: the two yellows are close but not equal, and painting the brand
+ * yellow underneath would flash one shade and then repaint to the other as the image
+ * lands. Nothing else on the page uses this value.
+ */
 .hero__art {
   position: relative;
-  display: grid;
-  place-items: center;
-  padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
-  min-height: clamp(280px, 36vw, 420px);
-  background: var(--color-accent-tint);
+  background: #fdce0e;
   border: var(--border-w-loud) solid var(--color-border);
   box-shadow: var(--shadow-lg);
 }
@@ -99,19 +106,16 @@
   right: clamp(-1.25rem, -0.5rem - 1.5vw, -0.75rem);
   z-index: 1;
 }
-.hero__dish {
-  position: relative;
-  width: min(92%, 400px);
-  animation: bob 1.6s var(--step) infinite alternate;
-}
 /*
- * Three frames up, three frames down. A sprite bobs; it does not ease. This and the
- * ticker are the only motion on the page that is not a state change.
+ * pixelated, not the browser's default smoothing: this is pixel art, and at any size
+ * other than 1:1 bilinear scaling turns its hard 1px edges into grey mush. The panel is
+ * fluid, so it is essentially never at 1:1.
  */
-@keyframes bob {
-  to {
-    transform: translateY(-12px);
-  }
+.hero__dish {
+  display: block;
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
 }
 
 /* ── The break clock ──────────────────────────────────────────── */
