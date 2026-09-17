@@ -102,8 +102,12 @@ export default function Footer() {
                 <span className="footer__idLabel">{m.role}</span>
                 <span className="footer__idValue">
                   {m.name}
-                  <br />
-                  {m.city}
+                  {m.city && (
+                    <>
+                      <br />
+                      {m.city}
+                    </>
+                  )}
                 </span>
               </div>
             ))}

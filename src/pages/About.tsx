@@ -92,7 +92,7 @@ export default function About() {
               <div className="contactCard" key={m.name}>
                 <p className="contactCard__label">{m.role}</p>
                 <p className="contactCard__value">{m.name}</p>
-                <p className="contactCard__note">{m.city}</p>
+                {m.city && <p className="contactCard__note">{m.city}</p>}
               </div>
             ))}
           </div>

@@ -17,12 +17,14 @@ export interface TeamMember {
   /**
    * City, not college. Naming the university implies it has agreed to be named and
    * that BiteSite already operates there, and it pre-claims the relationship the
-   * person is about to go and ask for.
+   * person is about to go and ask for. Optional: omitted renders no line at all,
+   * rather than an empty one.
    */
-  city: string;
+  city?: string;
 }
 
 export const team: TeamMember[] = [
+  { role: 'Founder & CEO', name: 'Yash Gadia' },
   { role: 'Chief Business Officer', name: 'Sanskar Rathore', city: 'Pune' },
   { role: 'Chief Operating Officer', name: 'Shubh Gupta', city: 'Kanpur' },
 ];
