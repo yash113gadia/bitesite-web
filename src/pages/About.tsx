@@ -35,6 +35,11 @@ const ROWS = [
   },
 ];
 
+const TEAM = [
+  { role: 'Chief Business Officer', name: 'Sanskar Rathore', city: 'Pune' },
+  { role: 'Chief Operating Officer', name: 'Shubh Gupta', city: 'Kanpur' },
+];
+
 export default function About() {
   useReveal();
 
@@ -71,6 +76,28 @@ export default function About() {
                   ))}
                 </div>
               </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="shell">
+          <div className="sectionHead reveal" data-reveal>
+            <p className="eyebrow">Team</p>
+            <h2>The people <span className="say">behind it</span></h2>
+            <p className="sectionHead__lede">
+              Who to talk to about bringing BiteSite to your campus.
+            </p>
+          </div>
+
+          <div className="contactGrid reveal" data-reveal>
+            {TEAM.map((m) => (
+              <div className="contactCard" key={m.name}>
+                <p className="contactCard__label">{m.role}</p>
+                <p className="contactCard__value">{m.name}</p>
+                <p className="contactCard__note">{m.city}</p>
+              </div>
             ))}
           </div>
         </div>
