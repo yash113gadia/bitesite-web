@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import Seo from '../components/Seo';
 import Detail from '../components/Detail';
 import { business, hasAddress, hasGstin, operatorFullName, portals } from '../config/business';
+import { team } from '../config/team';
 import { useReveal } from '../hooks/useReveal';
 
 const ROWS = [
@@ -33,11 +34,6 @@ const ROWS = [
       'We never see your card, UPI or bank credentials. Those go to Razorpay, our payment gateway, and we keep only the amount, the reference, and whether it worked.',
     ],
   },
-];
-
-const TEAM = [
-  { role: 'Chief Business Officer', name: 'Sanskar Rathore', city: 'Pune' },
-  { role: 'Chief Operating Officer', name: 'Shubh Gupta', city: 'Kanpur' },
 ];
 
 export default function About() {
@@ -92,7 +88,7 @@ export default function About() {
           </div>
 
           <div className="contactGrid reveal" data-reveal>
-            {TEAM.map((m) => (
+            {team.map((m) => (
               <div className="contactCard" key={m.name}>
                 <p className="contactCard__label">{m.role}</p>
                 <p className="contactCard__value">{m.name}</p>

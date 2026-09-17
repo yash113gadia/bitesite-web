@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import BowlMark from './BowlMark';
+import { team } from '../config/team';
 import {
   business,
   hasAddress,
@@ -90,6 +91,24 @@ export default function Footer() {
             </ul>
           </div>
         </div>
+
+        {/* The people who front BiteSite on campus. Deliberately its own block, above
+            and outside the merchant identity below: that block is the legal disclosure
+            set a payment reviewer reads, and a role held is not one of those. */}
+        {team.length > 0 && (
+          <div className="footer__identity">
+            {team.map((m) => (
+              <div className="footer__idItem" key={m.name}>
+                <span className="footer__idLabel">{m.role}</span>
+                <span className="footer__idValue">
+                  {m.name}
+                  <br />
+                  {m.city}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
 
         {/* Merchant identity. Rendered only once real values exist — an invented
             company name or address here is worse than an incomplete page. */}
